@@ -1,0 +1,12 @@
+{
+	"name": "Nexus Asset Library",
+	"provides": "asset-library",
+	"description": "Provides an asset library.",
+	"page-root": "assets",
+	"database": {
+		"asset-tags": {
+			"hash": "BINARY(20)",
+			"tag": "VARCHAR(100)"
+		}
+	}
+}
