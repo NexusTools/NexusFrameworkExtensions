@@ -58,8 +58,8 @@ class Email {
 		$this->headers["subject"] = $subject;
 	}
 
-	public function setFrom($to, $name = false) {
-		$this->headers["from"] = $name ? "$name <$to>" : $to;
+	public function setFrom($from, $name = false) {
+		$this->headers["from"] = $name ? "$name <$from>" : $from;
 	}
 
 	public function addAttachment($file) {
