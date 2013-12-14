@@ -203,6 +203,10 @@ Toolbar {
 	filter: progid : DXImageTransform.Microsoft.gradient (   startColorstr =
 		'#061523', endColorstr = '#141626', GradientType = 0 ); /* IE6-9 */
 	font: normal 13px sans-serif;
+	
+	-webkit-box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
+	box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
 }
 
 Toolbar Widget {
