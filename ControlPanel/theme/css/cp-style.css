@@ -332,18 +332,13 @@ Toolbar Widget Menu a span {
 }
 
 NavBar {
-	-webkit-box-shadow: inset -3px 3px 3px 2px rgba(1, 1, 1, 0.2);
-	-moz-box-shadow: inset -3px 3px 3px 2px rgba(1, 1, 1, 0.2);
-	box-shadow: inset -3px 3px 3px 2px rgba(1, 1, 1, 0.2);
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
 	padding-top: 28px;
 	height: 100%;
 	display: block;
 	float: left;
 	margin-top: -28px;
 	width: 150px;
-	background-color: #dfdfdf;
+	background-color: #333;
 	z-index: 200;
 }
 
@@ -392,10 +387,9 @@ NavBar Uploads Entry ProgressBar {
 }
 
 NavBar hr {
-	width: 85%;
-	margin-left: 5%;
 	height: 1px;
-	background-color: #ababab;
+	margin-right: 15px;
+	background-color: #111;
 	color: #ababab;
 	border: none;
 }
@@ -405,40 +399,45 @@ NavBar Item {
 	font-size: 13px;
 	line-height: 25px;
 	cursor: pointer;
-	color: #898989;
-	margin-top: 8px;
+	color: #fdfdfd;
+	margin-top: 6px;
 	margin-bottom: 2px;
+	margin-left: 6px;
+	margin-right: 6px;
 	padding-left: 15px;
 	text-align: left;
 	-moz-transition: all 400ms ease; /* Firefox 4 */
 	-webkit-transition: all 400ms ease; /* Safari and Chrome */
 	-o-transition: all 400ms ease; /* Opera */
 	transition: all 400ms ease; /* Opera */
+	-webkit-border-radius: 2px 2px 2px 2px;
+	border-radius: 2px 2px 2px 2px;
 }
 
 NavBar Item:hover {
 	color: #333;
+	background-color: #fdfdfd;
+	-webkit-box-shadow: 2px 2px 2px 2px rgba(1, 1, 1, 0.2);
+	-moz-box-shadow: 2px 2px 2px 2px rgba(1, 1, 1, 0.2);
+	box-shadow: 2px 2px 2px 2px rgba(1, 1, 1, 0.2);
 }
 
 NavBar Item.active {
-	color: #656565;
+	color: #000;
 	background-color: #fdfdfd;
 	font-weight: bold;
 	cursor: default;
-	-webkit-box-shadow: -6px 0px 3px 5px rgba(1, 1, 1, 0.2);
-	-moz-box-shadow: -6px 0px 3px 5px rgba(1, 1, 1, 0.2);
-	box-shadow: -6px 0px 3px 5px rgba(1, 1, 1, 0.2);
+	-webkit-box-shadow: -2px 0px 3px 2px rgba(1, 1, 1, 0.2);
+	-moz-box-shadow: -2px 0px 2px 2px rgba(1, 1, 1, 0.2);
+	box-shadow: -2px 0px 2px 2px rgba(1, 1, 1, 0.2);
 }
 
 NavBar Item Submenu {
 	display: none;
 	overflow: hidden;
 	padding-bottom: 4px;
-}
-
-NavBar Item Submenu hr {
-	margin-left: 1%;
-	width: 70%;
+	-webkit-border-radius: 2px 2px 2px 2px;
+	border-radius: 2px 2px 2px 2px;
 }
 
 NavBar Item.active Submenu {
@@ -448,7 +447,7 @@ NavBar Item.active Submenu {
 }
 
 NavBar Item.active Submenu Item.active {
-	color: #333;
+	color: #222;
 	background-color: transparent;
 	cursor: default;
 	-webkit-box-shadow: none;
@@ -457,11 +456,19 @@ NavBar Item.active Submenu Item.active {
 }
 
 NavBar Item Submenu Item {
+	color: #444;
 	font-size: 12px;
 	line-height: 20px;
 	padding-left: 5px;
 	margin: 0px;
 	font-weight: normal;
+}
+
+NavBar Item Submenu Item:hover {
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	text-shadow: 0 0 3px #000000;
 }
 
 Framework\:Page {
