@@ -86,3 +86,4 @@ if (PageModule::countArguments() === 3)
 else
 	ControlPanel::dumpNavBar();
 ?><uploads></uploads></navbar>
+<div id="toggleCollapse"></div>

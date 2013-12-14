@@ -57,7 +57,7 @@ Framework\:Widgets BreadCrumb input.text {
 	user-select: all;
 }
 
-Framework\:Widgets Framework\:Page,Framework\:Widgets Toolbar,Framework\:Widgets NavBar {
+Framework\:Widgets Toolbar {
 	-webkit-transition: -webkit-filter 500ms;
 	-moz-transition: -moz-filter 500ms;
 	-o-transition: -o-filter 500ms;
@@ -344,6 +344,36 @@ NavBar {
 	width: 150px;
 	background-color: #333;
 	z-index: 200;
+	-webkit-transition: margin-left 300ms, width 300ms, -webkit-filter 500ms;
+	transition: margin-left 300ms, width 300ms, filter 500ms;
+}
+
+#toggleCollapse {
+	cursor: w-resize;
+	z-index: 205;
+	position: absolute;
+	display: inline-block;
+	height: 100%;
+	margin-left: -6px;
+	width: 6px;
+	-webkit-transition: background-color 300ms, -webkit-filter 500ms;
+	transition: background-color 300ms, filter 500ms;
+}
+
+#toggleCollapse:hover {
+	background-color: #555;
+}
+
+Framework\:Theme.collapsed Framework\:Page {
+	padding-left: 6px;
+}
+
+Framework\:Theme.collapsed NavBar {
+	margin-left: -144px;
+}
+
+Framework\:Theme.collapsed #toggleCollapse {
+	cursor: e-resize;
 }
 
 NavBar Uploads {
@@ -487,6 +517,8 @@ Framework\:Page {
 	padding-top: 28px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
+	-webkit-transition: padding-left 300ms, -webkit-filter 500ms;
+	transition: padding-left 300ms, filter 500ms;
 }
 
 Framework\:Page BreadCrumb {

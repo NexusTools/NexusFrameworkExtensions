@@ -802,3 +802,12 @@ $$("Toolbar Widget[href] a").each(function(widget){
 	});
 });
 
+var collapseNavbar = document.getElementById("toggleCollapse");
+
+collapseNavbar.on("click", function() {
+	if(Framework.ThemeElement.hasClassName("collapsed"))
+		Framework.ThemeElement.removeClassName("collapsed");
+	else
+		Framework.ThemeElement.addClassName("collapsed");
+});
+
