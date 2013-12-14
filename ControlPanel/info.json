@@ -1,7 +1,7 @@
 {
 	"name": "ControlPanel",
 	"description": "Extendable Default Control Panel",
-	"dependancies": ["extension-database", "cache-database", "edit-core"],
+	"dependancies": ["extension-database", "cache-database", "edit-core", "font-awesome"],
 	"provides": "controlpanel",
 	"page-root": "control",
 	"version": "0.2",
