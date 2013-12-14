@@ -522,12 +522,17 @@ Framework\:Page BreadCrumb img:hover,Framework\:Widgets WhiteOut Popup div.tools
 	opacity: 1;
 }
 
+Framework\:Page BreadCrumb Item {
+	transition: text-shadow 200ms, color 100ms;
+	-moz-transition: text-shadow 200ms, color 100ms;
+	-webkit-transition: text-shadow 200ms, color 100ms;
+	border-radius: 5px;
+}
+
 Framework\:Page BreadCrumb Item:hover {
 	cursor: pointer;
-	border: solid 1pt black;
-	border-radius: 5px;
-	margin: -6px;
-	padding: 5px;
+	color: #FFF;
+	text-shadow: 0 0 4px #000000;
 }
 
 @
