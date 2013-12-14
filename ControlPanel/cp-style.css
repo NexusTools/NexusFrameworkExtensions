@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro);
+@import url('http://fonts.googleapis.com/css?family=Source+Sans+Pro');
 
 html,body {
 	width: 100%;
@@ -39,8 +39,7 @@ Framework\:Widgets,WhiteOut {
 	display: block;
 }
 
-Framework\:Widgets h1,Framework\:Widgets h2,Framework\:Widgets h3,Framework\:Widgets h4,Framework\:Widgets h5,Framework\:Widgets BreadCrumb,Framework\:Widgets NavBar,Framework\:Widgets ToolBar,Framework\:Widgets label
-	{
+Framework\:Widgets h1,Framework\:Widgets h2,Framework\:Widgets h3,Framework\:Widgets h4,Framework\:Widgets h5,Framework\:Widgets BreadCrumb,Framework\:Widgets NavBar,Framework\:Widgets ToolBar,Framework\:Widgets label {
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -58,8 +57,7 @@ Framework\:Widgets BreadCrumb input.text {
 	user-select: all;
 }
 
-Framework\:Widgets Framework\:Page,Framework\:Widgets Toolbar,Framework\:Widgets NavBar
-	{
+Framework\:Widgets Framework\:Page,Framework\:Widgets Toolbar,Framework\:Widgets NavBar {
 	-webkit-transition: -webkit-filter 500ms;
 	-moz-transition: -moz-filter 500ms;
 	-o-transition: -o-filter 500ms;
@@ -76,6 +74,7 @@ Framework\:Widgets.blurred NavBar {
     -ms-filter: blur(3px);
     filter: blur(3px);
 } */
+
 Framework\:Widgets WhiteOut {
 	background-color: rgba(255, 255, 255, 0.5);
 	/*display: none;*/
@@ -180,8 +179,7 @@ Framework\:Widgets WhiteOut Popup img:hover.item {
 	opacity: 1;
 }
 
-Framework\:Widgets WhiteOut Popup h1,Framework\:Widgets WhiteOut Popup h2,Framework\:Widgets WhiteOut Popup h3,Framework\:Widgets WhiteOut Popup h4,Framework\:Widgets WhiteOut Popup h5
-	{
+Framework\:Widgets WhiteOut Popup h1,Framework\:Widgets WhiteOut Popup h2,Framework\:Widgets WhiteOut Popup h3,Framework\:Widgets WhiteOut Popup h4,Framework\:Widgets WhiteOut Popup h5 {
 	text-align: center;
 }
 
@@ -489,8 +487,7 @@ Framework\:Page BreadCrumb {
 	min-height: 20px;
 }
 
-Framework\:Page BreadCrumb img,Framework\:Widgets WhiteOut Popup div.tools img
-	{
+Framework\:Page BreadCrumb img,Framework\:Widgets WhiteOut Popup div.tools img {
 	top: 2px;
 	width: 16px;
 	height: 16px;
@@ -506,8 +503,7 @@ Framework\:Page BreadCrumb img,Framework\:Widgets WhiteOut Popup div.tools img
 	-o-transition: opacity 200ms; /* Opera */
 }
 
-Framework\:Page BreadCrumb img:hover,Framework\:Widgets WhiteOut Popup div.tools img:hover
-	{
+Framework\:Page BreadCrumb img:hover,Framework\:Widgets WhiteOut Popup div.tools img:hover {
 	-webkit-filter: grayscale(0);
 	opacity: 1;
 }
@@ -522,44 +518,45 @@ Framework\:Page BreadCrumb Item:hover {
 
 @
 keyframes fadein {
-	from {opacity: 0;
-}
+	from {
+		opacity: 0;
+	}
 
-to {
-	opacity: 1;
-}
-
+	to {
+		opacity: 1;
+	}
 }
 @
 -moz-keyframes fadein /* Firefox */ {
-	from {opacity: 0;
-}
+	from {
+		opacity: 0;
+	}
 
-to {
-	opacity: 1;
-}
-
+	to {
+		opacity: 1;
+	}
 }
 @
 -webkit-keyframes fadein /* Safari and Chrome */ {
-	from {opacity: 0;
-}
+	from {
+		opacity: 0;
+	}
 
-to {
-	opacity: 1;
-}
-
+	to {
+		opacity: 1;
+	}
 }
 @
 -o-keyframes fadein /* Opera */ {
-	from {opacity: 0;
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
 }
 
-to {
-	opacity: 1;
-}
-
-}
 Framework\:Page BreadCrumb PageButtons {
 	display: block;
 	margin-right: 15px;
@@ -573,8 +570,7 @@ Framework\:Page BreadCrumb PageButtons {
 	-o-animation: fadein 500ms; /* Opera */
 }
 
-Framework\:Page BreadCrumb PageButtons input.button,Framework\:Page BreadCrumb PageButtons button
-	{
+Framework\:Page BreadCrumb PageButtons input.button,Framework\:Page BreadCrumb PageButtons button {
 	margin-right: 3px;
 }
 
