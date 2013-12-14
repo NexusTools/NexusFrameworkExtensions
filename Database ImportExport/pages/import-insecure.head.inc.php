@@ -1,6 +1,7 @@
 <?php
 define("INAPI", true);
 
+ini_set('auto_detect_line_endings', true);
 OutputFilter::resetToNative(false);
 header("Content-Type: text/plain");
 set_time_limit(0);
