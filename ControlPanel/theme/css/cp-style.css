@@ -650,7 +650,6 @@ Framework\:Page Content Table TR TD a {
 Framework\:Page Content Table TR.link:hover TD {
 	cursor: pointer;
 	background-color: #f3ffff;
-	text-decoration: underline;
 }
 
 Framework\:Page Content Table TR.link:hover TD.last {
