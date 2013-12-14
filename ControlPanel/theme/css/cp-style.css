@@ -388,7 +388,6 @@ NavBar Uploads Entry ProgressBar {
 
 NavBar hr {
 	height: 1px;
-	margin-right: 15px;
 	background-color: #111;
 	color: #ababab;
 	border: none;
@@ -438,6 +437,10 @@ NavBar Item Submenu {
 	padding-bottom: 4px;
 	-webkit-border-radius: 2px 2px 2px 2px;
 	border-radius: 2px 2px 2px 2px;
+}
+
+NavBar Item Submenu hr {
+	margin-right: 15px;
 }
 
 NavBar Item.active Submenu {
