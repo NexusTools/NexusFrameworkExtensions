@@ -1,0 +1,6 @@
+{
+	"name": "FontAwesome",
+	"provides": "font-awesome",
+	"description": "Provides FontAwesome.",
+	"url": "http://fontawesome.io/"
+}
