@@ -7,10 +7,6 @@ Template::setMetaTag("description", "The NexusTools PHP Framework Official Contr
 $base = dirname(dirname(__FILE__)).DIRSEP;
 $owdir = getcwd();
 chdir($base);
-Template::addScript($base."cp-script.js");
-Template::addStyles(Array(FRAMEWORK_PATH."resources/stylesheets/widgets.css", $base."cp-style.css"));
-if (array_key_exists("popup", $_GET))
-	Template::addStyle($base."cp-popup.css");
 
 $externStyle = fullpath("cp-theme.css");
 if (file_exists($externStyle))
