@@ -672,7 +672,6 @@ Framework\:Page Content Table TR TD {
 	-moz-transition: background-color 200ms; /* Firefox 4 */
 	-webkit-transition: background-color 200ms; /* Safari and Chrome */
 	-o-transition: background-color 200ms; /* Opera */
-	padding: 8px;
 }
 
 Framework\:Page Content Table TR TD a {
