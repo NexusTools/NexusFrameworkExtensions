@@ -222,9 +222,11 @@ Please be patient, you will be presented with a download link once the export is
 <form method="POST" action="control://Database/Export Table" style="text-align: left; display: inline-block; width: auto; margin: 0 auto">
 <input name="db" value="<?php echo htmlentities($database); ?>" type="hidden" />
 Omit Creation Fields<help title="Whether or not to include created-by and created fields in this export.">?</help><br />
-<input type="radio" name="omitcreat" id="omitcreatyes" value="1" checked><label for="omitcreatyes">Yes</label> <input type="radio" name="omitcreat" id="omitcreatno" value="0"><label for="omitcreatno">No</label><br />
+<widget class="component switch">
+<input type="radio" name="omitcreat" id="omitcreatyes" value="1" checked><label for="omitcreatyes">Yes</label> <input type="radio" name="omitcreat" id="omitcreatno" value="0"><label for="omitcreatno">No</label></widget><br />
 Omit Modification Fields<help title="Whether or not to include modified-by and modified fields in this export.">?</help><br />
-<input type="radio" name="omitmod" id="omitmodyes" value="1" checked><label for="omitmodyes">Yes</label> <input type="radio" name="omitmod" id="omitmodno" value="0"><label for="omitmodno">No</label><br />
+<widget class="component switch">
+<input type="radio" name="omitmod" id="omitmodyes" value="1" checked><label for="omitmodyes">Yes</label> <input type="radio" name="omitmod" id="omitmodno" value="0"><label for="omitmodno">No</label></widget><br />
 Table<br />
 <select style="width: 100%;" name="tab"><?php
 foreach ($db->listTables() as $t) {

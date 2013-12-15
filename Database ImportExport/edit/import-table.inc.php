@@ -26,7 +26,8 @@ The progress of an import cannot be measured, for larger databases it may take a
 File<br />
 <input type="file" name="dataFile" /><br />
 Clear First<help title="This will clear the table before entering new data, this effectively destroys any existing data and cannot be undone.">?</help><br />
-<input type="radio" name="clear" id="clearyes" value="1"><label for="clearyes">Yes</label> <input type="radio" name="clear" id="clesrno" value="0" checked><label for="clesrno">No</label><br />
+<widget class="component switch">
+<input type="radio" name="clear" id="clearyes" value="1"><label for="clearyes">Yes</label> <input type="radio" name="clear" id="clesrno" value="0" checked><label for="clesrno">No</label></widget><br />
 Mode<br />
 <select style="width: 100%" name="mode">
 <option value="0">Create and Update Rows and Entries</option>
