@@ -408,6 +408,45 @@ class ControlPanel {
 			$data['tools']['lock'] = Array("icon" => self::getStockIcon("locked"), "action" => "ControlPanel.loadPopup('ControlPanel', 'Edit Access Rule', {section: '".$cat."', page: '".$page."'})");
 		return $data;
 	}
+	
+	public static function dumpDashboard($cat = false, $page = false) {
+		?><groupbox style="width: 100%; max-width: 1020px"><label>Statistics</label>
+<p>Coming soon</p></groupbox><?php
+	
+		$catDropHR = false;
+
+		foreach (self::$naventries as $layer) {
+			if (count($layer) < 1)
+				continue;
+				
+			foreach ($layer as $name => $entryLayers) {
+
+?><groupbox><label><?php echo $name; ?></label><?php
+$drawHr = false;
+foreach ($entryLayers as $entries) {
+	if(count($entries) < 1)
+		continue;
+	if($drawHr)
+		echo '<hr />';
+	$drawHr = true;
+	foreach ($entries as $entry) {
+		echo "<a class='item'";
+
+		if (startsWith($entry, "POPUP|")) {
+			$entry = substr($entry, 6);
+			$popup = "?popup=true";
+		} else
+			$popup = false;
+
+		echo " href='control://$name/$entry$popup'";
+		echo ">$entry</a>";
+	}
+} ?>
+</groupbox><?php
+
+			}
+		}
+	}
 
 	public static function dumpNavBar($cat = false, $page = false) {
 		$catDropHR = false;

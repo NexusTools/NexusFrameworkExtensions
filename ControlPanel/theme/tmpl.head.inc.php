@@ -11,7 +11,7 @@ if (file_exists($banner)) {
 	echo "' alt='";
 	echo $domain;
 	echo "' height='32px' /></a>";
-	echo '<widget style="cursor: pointer" onclick="location.href=\''.BASE_URI.'control\'">Control Panel</widget>';
+	echo '<widget style="cursor: pointer" onclick="location.href=\''.BASE_URI.'control\'">Dashboard</widget>';
 } else {
 	$logo = fullpath("logo.png");
 	if (!file_exists($logo))
@@ -30,7 +30,7 @@ if (file_exists($banner)) {
 		echo $domain;
 		echo "' height='30px' /></a>";
 	}
-?><widget style="cursor: pointer" onclick="location.href='<?php echo BASE_URI; ?>control'"><?php echo $domain; ?> Control Panel</widget><?php } ?>
+?><widget style="cursor: pointer" onclick="location.href='<?php echo BASE_URI; ?>control'"><?php echo $domain; ?> Dashboard</widget><?php } ?>
 			<?php
 $widgets = ControlPanel::getToolbarWidgets();
 $count = count($widgets);

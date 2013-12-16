@@ -1,1 +1,3 @@
-<?php ?><breadcrumb><item>Select a Section</item></breadcrumb><content>Select a section on the left.</content>
+<breadcrumb><item>Dashboard</item></breadcrumb><content align="center"><?php
+ControlPanel::dumpDashboard();
+?></content>

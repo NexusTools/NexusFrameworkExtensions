@@ -17,7 +17,7 @@ requireAddon("unfinished-work");
 requireAddon("file-upload");
 
 Template::setTitleFormat("{{PAGENAME}} [ControlPanel]");
-Template::setTitle("Select a Section");
+Template::setTitle("Dashboard");
 
 PageModule::setThemePath($base."theme");
 chdir($owdir);

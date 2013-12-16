@@ -155,7 +155,7 @@ if(!array_key_exists("DEV_MODE", $defines))
 <table><tr><td>Description</td><td>Keywords</td></tr>
 <tr>
 	<td valign="top"><input name="meta_description" value="<?php echo $defines['META_DESCRIPTION']; ?>" type="text" class="text"></td>
-	<td rowspan="3"><textarea name="meta_keywords" style="height: 80px; resize:none;"><?php
+	<td rowspan="4"><textarea name="meta_keywords" style="height: 100%; resize:none;"><?php
 foreach (explode(",", $defines['META_KEYWORDS']) as $keyword)
 	echo trim($keyword)."\n";
 ?></textarea></td></tr>
