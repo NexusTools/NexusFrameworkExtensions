@@ -8,10 +8,6 @@ $base = dirname(dirname(__FILE__)).DIRSEP;
 $owdir = getcwd();
 chdir($base);
 
-$externStyle = fullpath("cp-theme.css");
-if (file_exists($externStyle))
-	Template::addStyle($externStyle);
-
 requireAddon("eventable-object");
 requireAddon("unfinished-work");
 requireAddon("file-upload");

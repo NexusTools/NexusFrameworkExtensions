@@ -1,0 +1,5 @@
+{
+	"name": "ControlPanel",
+	"parent": "NexusFramework",
+	"description": "Default Theme for the NexusFramework Control Panel"
+}
