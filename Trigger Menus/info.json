@@ -1,0 +1,16 @@
+{
+	"name": "Trigger Menus",
+	"description": "Trigger Menus provider.",
+	"enhancements": ["page-dialogs"],
+	"suggestions": ["Page Dialogs"],
+	"provides": "trigger-menus",
+	"version": "0.0.1",
+	"database": {
+		"entries": {
+			"menu": "VARCHAR(80)",
+			"display": "VARCHAR(100)",
+			"target": "VARCHAR(250)",
+			"popup": "BOOLEAN"
+		}
+	}
+}

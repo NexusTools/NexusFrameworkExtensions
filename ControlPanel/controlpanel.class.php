@@ -517,15 +517,19 @@ if (User::isSuperAdmin())
 // Advanced
 ControlPanel::registerPage("Website", "Log Viewer", "edit/log-viewer.inc.php", true, 2, 0, true);
 
-ControlPanel::registerPage("ControlPanel", "Access Rules", "edit/controlpanel-access-rules.json", true, 0, 0);
-ControlPanel::registerPage("ControlPanel", "Settings", "edit/controlpanel-configure.inc.php", true, 0, 0, true);
-ControlPanel::registerPage("ControlPanel", "Edit Access Rule", "edit/controlpanel-access-control.inc.php", false);
-ControlPanel::registerPage("ControlPanel", "Create Rule", "edit/controlpanel-create-rule.json", false);
+if (User::isAdmin()) {
+	ControlPanel::registerPage("Extensions", "Create", "edit/create-extension.inc.php", true, 0, 2);
+	ControlPanel::registerPage("Extensions", "Manage", "edit/manage-extensions.inc.php", true, 0, 2);
+	ControlPanel::registerPage("Extensions", "Repositories", "edit/extensions-repo.inc.php", true, 2, 2);
+	ControlPanel::registerPage("Extensions", "Edit", "edit/edit-extension.inc.php", false);
+}
 
-ControlPanel::registerPage("Extensions", "Create", "edit/create-extension.inc.php", true, 0, 0);
-ControlPanel::registerPage("Extensions", "Manage", "edit/manage-extensions.inc.php", true, 0, 0);
-ControlPanel::registerPage("Extensions", "Repositories", "edit/extensions-repo.inc.php", true, 2, 0);
-ControlPanel::registerPage("Extensions", "Edit", "edit/edit-extension.inc.php", false);
+if (User::isSuperAdmin()) {
+	ControlPanel::registerPage("Restrictions", "Access Rules", "edit/controlpanel-access-rules.json", true, 0, 2);
+	ControlPanel::registerPage("Restrictions", "Settings", "edit/controlpanel-configure.inc.php", true, 0, 2, true);
+	ControlPanel::registerPage("Restrictions", "Edit Access Rule", "edit/controlpanel-access-control.inc.php", false);
+	ControlPanel::registerPage("Restrictions", "Create Rule", "edit/controlpanel-create-rule.json", false);
+}
 
 ControlPanel::registerPage("Framework", "Browse Cache", "edit/browse-cache.inc.php", true, 0, 2);
 ControlPanel::registerPage("Framework", "Information", "edit/about-framework.inc.php", true, 0, 2, true);

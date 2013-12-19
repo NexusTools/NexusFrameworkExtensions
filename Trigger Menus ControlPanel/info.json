@@ -1,0 +1,8 @@
+{
+	"name": "Trigger Menus ControlPanel",
+	"description": "Trigger Menus ControlPanel Integration",
+	"dependancies": ["controlpanel", "trigger-menus"],
+	"suggestions": ["ControlPanel", "Trigger Menus"],
+	"provides": "controlpanel-trigger-menus",
+	"version": "0.0.1"
+}
