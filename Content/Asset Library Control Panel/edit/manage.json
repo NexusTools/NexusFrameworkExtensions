@@ -1,0 +1,32 @@
+{
+	"type": "manage-table",
+	"database": "AssetLibrary::getDatabase()",
+	"table": "assets",
+	"fields": {
+		"name": {},
+		"type": {
+			"render": "StringFormat::displayForID"
+		},
+		"category": {
+			"render": "AssetLibrary::categoryName"
+		},
+		"featured": {
+			"render": "AssetLibrary::yesNo"
+		},
+		"password": {
+			"display": "Password Protected",
+			"render": "AssetLibrary::yesNo"
+		}
+	},
+	"actions": {
+		"Edit": "Asset Library/Edit?id={{rowid}}",
+		"Set Password": "Asset Library/Password?id={{rowid}}",
+		"Delete": "Asset Library/Edit?id={{rowid}}&del"
+	},
+	"buttons": {
+		"new": {
+			"page": "Create",
+			"text": "Create"
+		}
+	}
+}

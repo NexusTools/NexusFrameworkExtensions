@@ -1,0 +1,6 @@
+{
+	"name": "Asset Library Control Panel",
+	"provides": "asset-library-controlpanel",
+	"description": "Provides a way to manage your asset library",
+	"dependancies": ["asset-library", "controlpanel"]
+}

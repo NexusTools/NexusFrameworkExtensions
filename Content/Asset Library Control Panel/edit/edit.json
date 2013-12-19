@@ -1,0 +1,45 @@
+{
+	"type": "edit-entry",
+	"database": "AssetLibrary::getDatabase()",
+	"table": "assets",
+	"fields": {
+		"name": {},
+		"type": {
+			"type": "select",
+			"retreiver": "AssetLibrary::getTypeSelect"
+		},
+		"category": {
+			"type": "parent-selector",
+			"database": "AssetLibrary::getDatabase()",
+			"table": "categories",
+			"show-all": 1
+		},
+		"preview": {
+			"type": "line",
+			"help": "This is the path to a file, or url, which can be used as a preview for this asset. In the case that the asset data provides a preview, such as with images and videos, this simply overrides it."
+		},
+		"data": {
+			"type": "line",
+			"help": "This is the path to a file, or url, where the data can be located for this asset."
+		},
+		"featured": {
+			"type": "yesno"
+		},
+		"description": {
+			"type": "html",
+			"help": "This is the description for this asset, it can contain html."
+		}
+	},
+	"actions": {
+		"save-close": {
+			"page": "Manage",
+			"message": "Asset {{name}} Updated!"
+		},
+		"save": {
+			"message": "Changes Saved!"
+		},
+		"discard": {
+			"page": "Manage"
+		}
+	}
+}

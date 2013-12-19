@@ -1,0 +1,22 @@
+{
+	"type": "edit-entry",
+	"database": "AssetLibrary::getDatabase()",
+	"table": "categories",
+	"actions": {
+		"save-close": {
+			"page": "Categories",
+			"message": "Category {{name}} Updated!"
+		},
+		"save": {
+			"message": "Changes Saved!"
+		},
+		"discard": {
+			"page": "Categories"
+		}
+	},
+	"fields": {
+		"name": {
+			"maxlen": 20
+		}
+	}
+}

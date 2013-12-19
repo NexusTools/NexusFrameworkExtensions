@@ -1,0 +1,19 @@
+{
+	"type": "create-entry",
+	"database": "AssetLibrary::getDatabase()",
+	"table": "categories",
+	"actions": {
+		"create": {
+			"page": "Categories",
+			"message": "Category Created Successfully!"
+		},
+		"discard": {
+			"page": "Categories"
+		}
+	},
+	"fields": {
+		"name": {
+			"maxlen": 20
+		}
+	}
+}

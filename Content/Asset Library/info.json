@@ -1,0 +1,21 @@
+{
+	"name": "Asset Library",
+	"provides": "asset-library",
+	"description": "Provides a library for managing assets, such as media files.",
+	"database": {
+		"assets": {
+			"name": "VARCHAR(40)",
+			"type": "VARCHAR(20)",
+			"data": "BINARY(200)",
+			"preview": "VARCHAR(60)",
+			"description": "BINARY(2048)",
+			"password": ":Password",
+			"category": "INTEGER",
+			"featured": "BOOLEAN"
+		},
+		"categories": {
+			"name": "VARCHAR(50)",
+			"parent": "INTEGER"
+		}
+	}
+}

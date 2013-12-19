@@ -1,0 +1,6 @@
+{
+	"name": "Vimeo Asset",
+	"provides": "vimeo-asset",
+	"description": "Adds a video asset type which uses vimeo",
+	"dependancies": ["asset-library"]
+}

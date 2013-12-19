@@ -1,0 +1,20 @@
+{
+	"type": "manage-table",
+	"database": "AssetLibrary::getDatabase()",
+	"table": "categories",
+	"fields": {
+		"name": {},
+		"parent": {}
+	},
+	"actions": {
+		"Edit": "Asset Library/Edit Category?id={{rowid}}&popup=true",
+		"Delete": "Asset Library/Edit Category?id={{rowid}}&del"
+	},
+	"buttons": {
+		"new": {
+			"page": "Create Category",
+			"text": "Create",
+			"popup": 1
+		}
+	}
+}
