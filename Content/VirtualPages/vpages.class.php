@@ -135,7 +135,7 @@ class VirtualPages {
 
 	public static function runPage($type, $mode, $args = false, $echoOutput = false) {
 		if (!isset(self::$pageTypes[$type])) {
-			echo "MISSING PAGE SCRIPT FOR `$type`";
+			throw new Exception("MISSING PAGE SCRIPT FOR `$type`");
 			return;
 		}
 
