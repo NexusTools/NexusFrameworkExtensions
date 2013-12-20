@@ -33,7 +33,7 @@ class TriggerMenus {
 			if(startsWith($entry['target'], "/")) {
 				if($entry['check-page']*1) {
 					$mod = new PageModule($entry['target']);
-					$mod->initialize(false);
+					//$mod->initialize(false);
 					if($mod->hasError())
 						continue;
 				}
