@@ -70,35 +70,35 @@ function __renderFileNameLink($entry) {
 
 function __fileActions($entry) {
 	if (!is_readable($entry['path']))
-		return Array("Fix Permissions" => "Resources/Fix Permissions?path=media/{{uri}}");
+		return Array("Fix Permissions" => "Media/Fix Permissions?path=media/{{uri}}");
 
 	if (!is_writable($entry['path'])) {
 		if (is_dir($entry['path']))
 			return Array(
-				"Explore" => "Resources/Media?path={{uri}}",
-				//"Download as Archive" => "Resources/Create Archive?file=media/{{uri}}",
-				"Fix Permissions" => "Resources/Fix Permissions?path=media/{{uri}}"
+				"Explore" => "Media/Browse?path={{uri}}",
+				//"Download as Archive" => "Media/Create Archive?file=media/{{uri}}",
+				"Fix Permissions" => "Media/Fix Permissions?path=media/{{uri}}"
 			);
 		return Array(
-			"View" => "Resources/View?file=media/{{uri}}",
+			"View" => "Media/View?file=media/{{uri}}",
 			"Download" => Framework::getReferenceURI($entry['path']),
-			//"Download in Archive" => "Resources/Create Archive?file=media/{{uri}}",
-			"Fix Permissions" => "Resources/Fix Permissions?path=media/{{uri}}"
+			//"Download in Archive" => "Media/Create Archive?file=media/{{uri}}",
+			"Fix Permissions" => "Media/Fix Permissions?path=media/{{uri}}"
 		);
 	}
 
 	if (is_dir($entry['path']))
 		return Array(
-			"Explore" => "Resources/Media?path={{uri}}",
-			//"Download as Archive" => "Resources/Create Archive?file=media/{{uri}}",
-			"Delete" => "Resources/Delete?file=media/{{uri}}"
+			"Explore" => "Media/Browse?path={{uri}}",
+			//"Download as Archive" => "Media/Create Archive?file=media/{{uri}}",
+			"Delete" => "Media/Delete?file=media/{{uri}}"
 		);
 
 	return Array(
-		"Edit" => "Resources/Edit?file={{uri}}",
+		"Edit" => "Media/Edit?file={{uri}}",
 		"Download" => Framework::getReferenceURI($entry['path']),
-		//"Download in Archive" => "Resources/Create Archive?file=media/{{uri}}",
-		"Delete" => "Resources/Delete?file=media/{{uri}}"
+		//"Download in Archive" => "Media/Create Archive?file=media/{{uri}}",
+		"Delete" => "Media/Delete?file=media/{{uri}}"
 	);
 }
 
@@ -202,7 +202,7 @@ if (isset($_GET['path'])) {
 		if (strlen($uri))
 			$uri .= "/";
 		$uri .= $path;
-		array_push($breadcrumb, Array("title" => $path, "action" => "ControlPanel.loadPage('Resources', 'Media', {path: '$uri'})"));
+		array_push($breadcrumb, Array("title" => $path, "action" => "ControlPanel.loadPage('Media', 'Browse', {path: '$uri'})"));
 	}
 	return $breadcrumb;
 }
