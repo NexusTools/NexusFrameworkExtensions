@@ -7,8 +7,8 @@
 		"parent": {}
 	},
 	"actions": {
-		"Edit": "Asset Library/Edit Category?id={{rowid}}&popup=true",
-		"Delete": "Asset Library/Edit Category?id={{rowid}}&del"
+		"Edit": "Assets/Edit Category?id={{rowid}}&popup=true",
+		"Delete": "Assets/Edit Category?id={{rowid}}&del"
 	},
 	"buttons": {
 		"new": {

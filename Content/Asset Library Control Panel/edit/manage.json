@@ -19,9 +19,9 @@
 		}
 	},
 	"actions": {
-		"Edit": "Asset Library/Edit?id={{rowid}}",
-		"Set Password": "Asset Library/Password?id={{rowid}}",
-		"Delete": "Asset Library/Edit?id={{rowid}}&del"
+		"Edit": "Assets/Edit?id={{rowid}}",
+		"Set Password": "Assets/Password?id={{rowid}}",
+		"Delete": "Assets/Edit?id={{rowid}}&del"
 	},
 	"buttons": {
 		"new": {
