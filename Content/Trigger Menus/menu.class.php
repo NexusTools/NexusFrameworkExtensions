@@ -27,7 +27,21 @@ class TriggerMenus {
 		
 		$db = self::getDatabase();
 		foreach($db->select("entries", array("menu" => $pos, "parent" => $parent)) as $entry) {
-			array_push($menu, array("text" => interpolate($entry['display']), "url" => $entry['target'],
+			if($entry['condition'] && !eval("return $entry[condition];"))
+				continue;
+				
+			if(startsWith($entry['target'], "/")) {
+				if($entry['check-page']*1) {
+					$mod = new PageModule($entry['target']);
+					$mod->initialize(false);
+					if($mod->hasError())
+						continue;
+				}
+				$entry['target'] = cleanpath(BASE_URI . $entry['target']);
+			}
+			
+			array_push($menu, array("text" => interpolate($entry['display']),
+					"url" => $entry['target'],
 					"submenu" => self::genMenu($pos, $entry['rowid'])));
 		}
 		
