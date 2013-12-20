@@ -371,7 +371,7 @@ class ControlPanel {
 				$data['html'] .= $oldHtml;
 			$data["uri"] = "$cat/".self::$newPage;
 			if (User::isSuperAdmin() && $cat != "ControlPanel")
-				$data['tools']['lock'] = Array("icon" => self::getStockIcon("locked"), "action" => "ControlPanel.loadPopup('ControlPanel', 'Edit Access Rule', {section: '".$cat."', page: '".self::$newPage."'})");
+				$data['tools']['lock'] = Array("icon" => self::getStockIcon("locked"), "action" => "ControlPanel.loadPopup('Restrictions', 'Edit Access Rule', {section: '".$cat."', page: '".self::$newPage."'})");
 			if (!$data['html'])
 				$data['html'] = "<banner class='error'>Unknown error</banner>";
 			return $data;
@@ -405,7 +405,7 @@ class ControlPanel {
 
 		$data['tools'] = Array();
 		if (User::isSuperAdmin() && $cat != "ControlPanel")
-			$data['tools']['lock'] = Array("icon" => self::getStockIcon("locked"), "action" => "ControlPanel.loadPopup('ControlPanel', 'Edit Access Rule', {section: '".$cat."', page: '".$page."'})");
+			$data['tools']['lock'] = Array("icon" => self::getStockIcon("locked"), "action" => "ControlPanel.loadPopup('Restrictions', 'Edit Access Rule', {section: '".$cat."', page: '".$page."'})");
 		return $data;
 	}
 	
