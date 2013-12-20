@@ -18,7 +18,7 @@
 		"delete": {
 			"page": "Categories",
 			"question": "Delete Category `{{name}}`?",
-			"message": "Category `{{name}}` Deleted?"
+			"message": "Category `{{name}}` Deleted!"
 		}
 	},
 	"fields": {

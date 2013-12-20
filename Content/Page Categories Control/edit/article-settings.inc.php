@@ -7,9 +7,9 @@ if (isset($_POST['action']) && $_POST['action'] == "apply") {
 	$layout = PageCategories::getDefaultLayout();
 ?><pagebuttons><?php
 ControlPanel::renderStockButton("apply");
-ControlPanel::renderStockButton("discard", "ControlPanel.loadPage('Pages', 'Manage')");
+ControlPanel::renderStockButton("discard", "ControlPanel.loadPage('Content', 'Manage')");
 ?></pagebuttons>
-<form action="control://Pages/Default Category">
+<form action="control://Content/Default Category">
 Layout<br />
 <input id="__cp_basicPage_layout0" style="position: relative; top: -35px;" name="layout" value="0" type="radio"<?php
 if($layout == 0)

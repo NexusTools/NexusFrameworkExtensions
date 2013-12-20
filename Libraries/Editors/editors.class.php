@@ -31,8 +31,14 @@ class EditCore {
 	}
 
 	public static function run($type, $mode, $name, $value = null, $meta = Array("required" => 1)) {
-		if ($value === null)
-			$value = isset($_POST[$name]) ? $_POST[$name] : false;
+		if ($value === null) {
+			if(array_key_exists($name, $_POST))
+				$value = $_POST[$name];
+			else if(array_key_exists("default", $meta))
+				$value = $meta['default'];
+			else
+				$value = false;
+		}
 		if (isset(self::$editors[$type]))
 			return include(self::$editors[$type]);
 		else
@@ -58,4 +64,5 @@ EditCore::registerEditor("select", "editors/select.inc.php");
 EditCore::registerEditor("email", "editors/email.inc.php");
 EditCore::registerEditor("password", "editors/password.inc.php");
 EditCore::registerEditor("html", "editors/html.inc.php");
+EditCore::registerEditor("url", "editors/url.inc.php");
 ?>

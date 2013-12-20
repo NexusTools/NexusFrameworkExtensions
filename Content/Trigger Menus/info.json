@@ -8,8 +8,11 @@
 	"database": {
 		"entries": {
 			"menu": "VARCHAR(80)",
-			"display": "VARCHAR(100)",
 			"target": "VARCHAR(250)",
+			"display": "VARCHAR(100)",
+			"condition": "VARCHAR(250)",
+			"check-page": "BOOLEAN",
+			"parent": "INTEGER",
 			"popup": "BOOLEAN"
 		}
 	}

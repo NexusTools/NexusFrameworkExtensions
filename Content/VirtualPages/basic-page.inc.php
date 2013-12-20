@@ -69,7 +69,7 @@ Layout<br /><?php
 ?><br />Widgets<br /><?php
 	if ($layout >= 2) {
 		echo "<button onclick=\"";
-		echo "ControlPanel.loadPage('Pages', 'Edit Widgets', {location: $page[rowid], title: ";
+		echo "ControlPanel.loadPage('Content', 'Edit Widgets', {location: $page[rowid], title: ";
 		echo htmlspecialchars("\"`$page[title]` [Left column]\"");
 		echo ", subtitle: ";
 		echo htmlspecialchars("\"$page[path]\"");
@@ -79,7 +79,7 @@ Layout<br /><?php
 		echo " Widgets</center></button>";
 	}
 	echo "<button onclick=\"";
-	echo "ControlPanel.loadPage('Pages', 'Edit Widgets', {location: $page[rowid], title: ";
+	echo "ControlPanel.loadPage('Content', 'Edit Widgets', {location: $page[rowid], title: ";
 	echo htmlspecialchars("\"`$page[title]` [Page Area]\"");
 	echo ", subtitle: ";
 	echo htmlspecialchars("\"$page[path]\"");
@@ -88,7 +88,7 @@ Layout<br /><?php
 	echo " Widgets</center></button>";
 	if ($layout == 1 || $layout == 3) {
 		echo "<button onclick=\"";
-		echo "ControlPanel.loadPage('Pages', 'Edit Widgets', {location: $page[rowid], title: ";
+		echo "ControlPanel.loadPage('Content', 'Edit Widgets', {location: $page[rowid], title: ";
 		echo htmlspecialchars("\"`$page[title]` [Right column]\"");
 		echo ", subtitle: ";
 		echo htmlspecialchars("\"$page[path]\"");

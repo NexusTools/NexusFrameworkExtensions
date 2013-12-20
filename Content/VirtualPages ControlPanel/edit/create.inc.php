@@ -26,10 +26,10 @@ else
 <pagebuttons><?php
 ControlPanel::renderStockButton("save", false, "Create");
 ControlPanel::renderStockButton("publish", false, "Create & Publish");
-ControlPanel::renderStockButton("discard", "ControlPanel.loadPage('Pages', 'Manage')", "Discard");
+ControlPanel::renderStockButton("discard", "ControlPanel.loadPage('Content', 'Manage')", "Discard");
 $types = VirtualPages::getPageTypes();
 ?></pagebuttons>
-<form action="control://Pages/Create">
+<form action="control://Content/Create">
 Title<br />
 <input <?php if(isset($_POST['condition'])) echo "value=\"" .htmlspecialchars($_POST['title']). "\" ";?>name="title" type="text" class="text large"><br />
 Condition<br />

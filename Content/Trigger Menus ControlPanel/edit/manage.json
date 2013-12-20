@@ -1,0 +1,24 @@
+{
+	"type": "manage-table",
+	"database": "Database::getInstance('Trigger Menus')",
+	"table": "entries",
+	"fields": {
+		"display": {
+			"display": "Entry",
+			"value-html": "{{display}}\n{{small}}<a target='_blank' href='{{BASE_URL}}{{target}}'>{{target}}</a>{{endsmall}}"
+		},
+		"menu": {
+			"display": "Position",
+			"render": "StringFormat::displayForID"
+		}
+	},
+	"actions": {
+		"Edit": "Menus/Edit?id={{rowid}}",
+		"Delete": "Menus/Edit?id={{rowid}}&del"
+	},
+	"buttons": {
+		"new": {
+			"page": "Create"
+		}
+	}
+}

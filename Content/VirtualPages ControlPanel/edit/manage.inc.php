@@ -24,21 +24,9 @@ ControlPanel::renderManagePage(VirtualPages::getDatabase(), "pages", Array("titl
 	"condition" => Array(
 		"display" => "Visibility",
 		"render" => "StringFormat::formatCondition"
-	),
-	"created" => Array(
-		"render" => "StringFormat::formatDate"
-	),
-	"created-by" => Array(
-		"render" => "User::getFullNameByID"
-	),
-	"modified" => Array(
-		"render" => "StringFormat::formatDate"
-	),
-	"modified-by" => Array(
-		"render" => "User::getFullNameByID"
 	)), Array(
-	"Edit" => "Pages/Edit?id={{rowid}}",
-	"Delete" => "Pages/Delete?id={{rowid}}&popup=true"
+	"Edit" => "Content/Edit?id={{rowid}}",
+	"Delete" => "Content/Delete?id={{rowid}}&popup=true"
 ), true, Array(
 	"new" => Array(
 		"text" => "Create",

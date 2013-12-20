@@ -37,7 +37,7 @@ $ddown = false;
 if (count($widgets))
 	foreach ($widgets as $widget) {
 		if ($lid)
-			echo "<input type=\"button\" class=\"button\" value=\"Move Down\" onclick=\"ControlPanel.loadPage('Pages', 'Edit Widgets', {swap: '$widget[rowid]-$lid', ".$state."})\" /><br />";
+			echo "<input type=\"button\" class=\"button\" value=\"Move Down\" onclick=\"ControlPanel.loadPage('Content', 'Edit Widgets', {swap: '$widget[rowid]-$lid', ".$state."})\" /><br />";
 		else
 			if (!$first)
 				$ddown = true;
@@ -62,16 +62,16 @@ if (count($widgets))
 			} else
 				echo StringFormat::displayForID($widget['type']);
 
-		echo "<br /><input type=\"button\" class=\"button\" value=\"Edit\" onclick=\"ControlPanel.loadPage('Pages', 'Edit Widget', {id: $widget[rowid], ".$state."})\" />";
-		echo "<input type=\"button\" class=\"button\" value=\"Delete\" onclick=\"ControlPanel.loadPopup('Pages', 'Delete Widget', {id: $widget[rowid]})\" />";
+		echo "<br /><input type=\"button\" class=\"button\" value=\"Edit\" onclick=\"ControlPanel.loadPage('Content', 'Edit Widget', {id: $widget[rowid], ".$state."})\" />";
+		echo "<input type=\"button\" class=\"button\" value=\"Delete\" onclick=\"ControlPanel.loadPopup('Content', 'Delete Widget', {id: $widget[rowid]})\" />";
 		if ($lid)
-			echo "<input type=\"button\" class=\"button\" value=\"Move Up\" onclick=\"ControlPanel.loadPage('Pages', 'Edit Widgets', {swap: '$widget[rowid]-$lid', ".$state."})\" />";
+			echo "<input type=\"button\" class=\"button\" value=\"Move Up\" onclick=\"ControlPanel.loadPage('Content', 'Edit Widgets', {swap: '$widget[rowid]-$lid', ".$state."})\" />";
 
 		$lid = $widget['rowid'];
 	}
 else
 	echo "<h3>No Widgets</h3>";
-?><br /><select onchange="var value = $(this).getValue();if(value.length < 1)return;ControlPanel.loadPage('Pages', 'Create Widget', {slot: <?php echo $slot; ?>, section: <?php echo htmlspecialchars("\"$section\""); ?>, parent: <?php echo $parent; ?>, location: <?php echo $location; ?>, type: value});"><option value="">Add Widget</option>
+?><br /><select onchange="var value = $(this).getValue();if(value.length < 1)return;ControlPanel.loadPage('Content', 'Create Widget', {slot: <?php echo $slot; ?>, section: <?php echo htmlspecialchars("\"$section\""); ?>, parent: <?php echo $parent; ?>, location: <?php echo $location; ?>, type: value});"><option value="">Add Widget</option>
 <option value="">------------------------</option><?php
 if ($parent > 0)
 	$slot = VirtualPages::EMBEDDABLE;

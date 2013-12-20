@@ -13,10 +13,10 @@ $page = VirtualPages::fetchPage($_GET['id']);
 ControlPanel::renderStockButton("save");
 ControlPanel::renderStockButton("save-close");
 ControlPanel::renderStockButton("clone");
-ControlPanel::renderStockButton("delete", "ControlPanel.loadPopup('Pages', 'Delete', {id: $page[rowid]})");
-ControlPanel::renderStockButton("discard", "ControlPanel.loadPage('Pages', 'Manage')");
+ControlPanel::renderStockButton("delete", "ControlPanel.loadPopup('Content', 'Delete', {id: $page[rowid]})");
+ControlPanel::renderStockButton("discard", "ControlPanel.loadPage('Content', 'Manage')");
 ?></pagebuttons>
-<form action="control://Pages/Edit?id=<?php echo $_GET['id']; ?>">
+<form action="control://Content/Edit?id=<?php echo $_GET['id']; ?>">
 Title<br />
 <input name="title" type="text" class="text large" value="<?php echo $page['title']; ?>"><br />
 Condition<br />

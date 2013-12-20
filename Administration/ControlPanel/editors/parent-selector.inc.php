@@ -12,7 +12,7 @@ case EditCore::RENDER:
 	echo htmlspecialchars($value);
 	echo "\">";
 
-	ControlPanel::renderRecursiveSelectOptions($entries, $value === false ? 0 : $value, array_key_exists("show-all", $meta) ? -1 : $meta['rowid']);
+	ControlPanel::renderRecursiveSelectOptions($entries, $value === false ? 0 : $value, array_key_exists("show-all", $meta) ? -1 : $meta['rowid'], array_key_exists("display", $meta) ? $meta["display"] : "name");
 	echo "</select>";
 }
 ?>

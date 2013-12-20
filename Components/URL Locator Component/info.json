@@ -1,0 +1,6 @@
+{
+	"name": "URL Locator Component",
+	"description": "A Component that integrates search-core to provide an easy url editor.",
+	"provides": "component-url-editor",
+	"dependancies": ["controlpanel"]
+}

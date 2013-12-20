@@ -1,0 +1,6 @@
+{
+	"name": "Virtual Page Search",
+	"provides": "virtual-page-search",
+	"dependancies": ["search-core", "virtual-pages", "page-search"],
+	"description": "Provides a Search Core handler which scans the virtual page provider and returns results."
+}

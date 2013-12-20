@@ -75,9 +75,7 @@ class VirtualPages {
 	}
 
 	public static function updatePath($id, $path) {
-		if (!startsWith($path, "/"))
-			$path = "/$path";
-		return self::$database->update("pages", Array("path" => strtolower(str_replace("//", "/", $path))), $id);
+		return self::$database->update("pages", Array("path" => rootpath($path)), $id);
 	}
 
 	public static function getDatabase() {

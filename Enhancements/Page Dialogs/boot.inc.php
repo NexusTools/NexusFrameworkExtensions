@@ -1,7 +1,7 @@
 <?php
-Template::addScript("script.js");
+Template::addGlobalScript("script.js");
 if (LEGACY_BROWSER || preg_match('/Opera/i', $_SERVER['HTTP_USER_AGENT']))
-	Template::addStyle("popup.legacy.css");
+	Template::addGlobalStyle("popup.legacy.css");
 else
-	Template::addStyle("popup.css");
+	Template::addGlobalStyle("popup.css");
 ?>

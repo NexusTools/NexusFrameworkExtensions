@@ -1,4 +1,4 @@
-<form action="control://Pages/Edit Widget"><?php
+<form action="control://Content/Edit Widget"><?php
 $widget = VirtualPages::fetchWidget($_GET['id']);
 if (isset($_POST['action']) && ($_POST['action'] == "save" || $_POST['action'] == "save-close")) {
 	$widget['config'] = VirtualPages::runWidget($widget['type'], VirtualPages::UPDATE_CONFIG, $_GET['id']);
@@ -37,5 +37,5 @@ $oldstate = "id: ".$_GET['id'].", subtitle: \"".(isset($_GET['subtitle']) ? $_GE
 
 ControlPanel::renderStockButton("save", "ControlPanel.submitForm(this, {".$oldstate."})");
 ControlPanel::renderStockButton("save-close", "ControlPanel.submitForm(this, {".$oldstate."})");
-ControlPanel::renderStockButton("discard", "ControlPanel.loadPage('Pages', 'Edit Widgets', {".$oldstate."})");
+ControlPanel::renderStockButton("discard", "ControlPanel.loadPage('Content', 'Edit Widgets', {".$oldstate."})");
 ?></pagebuttons>

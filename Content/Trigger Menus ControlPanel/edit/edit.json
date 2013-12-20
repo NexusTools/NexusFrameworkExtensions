@@ -1,0 +1,50 @@
+{
+	"type": "edit-entry",
+	"database": "Database::getInstance('Trigger Menus')",
+	"table": "entries",
+	"actions": {
+		"discard": {
+			"page": "Manage"
+		},
+		"save-close": {
+			"page": "Manage",
+			"message": "Menu {{display}} Updated!"
+		},
+		"save": {
+			"message": "Changes Saved!"
+		},
+		"delete": {
+			"page": "Manage",
+			"question": "Delete Menu `{{display}}`?",
+			"message": "Menu `{{display}}` Deleted!"
+		}
+	},
+	"fields": {
+		"display": {
+			"maxlen": 100,
+			"type": "title"
+		},
+		"target": {
+			"type": "url"
+		},
+		"menu": {
+			"type": "select",
+			"title": "Position",
+			"retreiver": "TriggerMenus::getPositions",
+			"help": "Ignored if parent is set"
+		},
+		"parent": {
+			"database": "Database::getInstance('Trigger Menus')",
+			"display": "display",
+			"table": "entries"
+		},
+		"condition": {},
+		"check-page": {
+			"default": 1,
+			"type": "yesno"
+		},
+		"popup": {
+			"type": "yesno"
+		}
+	}
+}
