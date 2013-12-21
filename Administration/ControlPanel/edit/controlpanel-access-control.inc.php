@@ -58,5 +58,5 @@ else
     echo "page=" . urlencode($page) . "&section=" . urlencode($section);
 ?>"><?php
 if ($error)
-	echo '<span style="color:red; font-size: 10px;">'.htmlentities($error).'</span><br />';
-?><input class="text large" name="condition" value="<?php echo htmlentities($value); ?>"></form>
+	echo '<span style="color:red; font-size: 10px;">'.htmlentities($error).'</span>';
+?><br /><input class="text large" name="condition" value="<?php echo htmlentities($value); ?>"></form>

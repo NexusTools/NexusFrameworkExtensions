@@ -257,10 +257,10 @@ foreach ($fields as $field => $meta) {
 		echo htmlspecialchars($meta['help']);
 		echo "\">?</help>";
 	}
-	echo "<br />";
 	if (isset($errors[$field]))
-		echo "<span style=\"color:red; font-size: 10px;\">".$errors[$field]."</span><br />";
+		echo "<error>".$errors[$field]."</error>";
 
+	echo "<br />";
 	EditCore::render($meta['type'], $field, isset($values[$field]) ? (isset($meta['decode']) ? call_user_func($meta['decode'], $values[$field]) : $values[$field]) : (isset($meta['default']) ? $meta['default'] : null), $meta);
 }
 ?>
