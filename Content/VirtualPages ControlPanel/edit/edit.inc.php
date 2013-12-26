@@ -26,4 +26,6 @@ Type<br />
 <?php
 VirtualPages::runPage($page['type'], VirtualPages::RENDER_EDITOR, $page);
 ?>
-</form>
+</form><?php
+return array(false, Array("title" => "Edit Page", "action" => "ControlPanel.loadPage('Content', 'Edit', {id: $_GET[id]});"));
+?>

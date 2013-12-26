@@ -38,4 +38,36 @@ $oldstate = "id: ".$_GET['id'].", subtitle: \"".(isset($_GET['subtitle']) ? $_GE
 ControlPanel::renderStockButton("save", "ControlPanel.submitForm(this, {".$oldstate."})");
 ControlPanel::renderStockButton("save-close", "ControlPanel.submitForm(this, {".$oldstate."})");
 ControlPanel::renderStockButton("discard", "ControlPanel.loadPage('Content', 'Edit Widgets', {".$oldstate."})");
-?></pagebuttons>
+?></pagebuttons><?php
+
+
+$location = $widget['location'];
+$section = $widget['section'];
+$parent = $widget['parent'];
+$slot = $widget['slot'];
+
+if($section == "pages") {
+	$page = Array("title" => "Edit Page", "action" => "ControlPanel.loadPage('Content', 'Edit', {id: $location});");
+} else
+	$page = "Unknown Container";
+
+switch($slot) {
+	case VirtualPages::LEFTCOLUMN:
+		$subtitle = "Left Column";
+		break;
+	
+	case VirtualPages::PAGEAREA:
+		$subtitle = "Page Area";
+		break;
+	
+	case VirtualPages::RIGHTCOLUMN:
+		$subtitle = "Right Column";
+		break;
+	
+	default:
+		$subtitle = "Widgets";
+		break;
+}
+
+return array(false, $page, array("title" => $subtitle, "action" => "ControlPanel.loadPage('Content', 'Edit Widgets', {section: \"$section\", parent: $parent, location: $location, slot: $slot});"), "Edit Widget");
+?>

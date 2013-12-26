@@ -9,14 +9,6 @@ if (isset($_GET['delete'])) {
 } else
 	if (isset($_GET['toggle']))
 		VirtualPages::togglePublished($_GET['toggle']);
-	else
-		if (isset($_GET['delwidget'])) {
-			$widget = VirtualPages::fetchWidget($_GET['delwidget']);
-			if ($widget) {
-				VirtualPages::dropWidget($widget['rowid']);
-				echo "<banner class=\"success\">Widget Deleted</banner><br />";
-			}
-		}
 
 ControlPanel::renderManagePage(VirtualPages::getDatabase(), "pages", Array("title" => Array(
 	"value-html" => "{{title}} {{small}}({{type}}){{endsmall}}\n{{small}}<a target='_blank' href='{{BASE_URL}}{{path}}'>{{path}}</a>{{endsmall}}"

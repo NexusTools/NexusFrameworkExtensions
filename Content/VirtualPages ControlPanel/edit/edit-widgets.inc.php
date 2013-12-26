@@ -1,8 +1,25 @@
 <?php
-$location = isset($_GET['location']) ? $_GET['location'] : 0;
-$section = isset($_GET['section']) ? $_GET['section'] : "pages";
-$parent = isset($_GET['parent']) ? $_GET['parent'] : 0;
-$slot = isset($_GET['slot']) ? $_GET['slot'] : VirtualPages::PAGEAREA;
+if (isset($_GET['delwidget'])) {
+	$widget = VirtualPages::fetchWidget($_GET['delwidget']);
+	
+	if ($widget) {
+		$location = $widget['location'];
+		$section = $widget['section'];
+		$parent = $widget['parent'];
+		$slot = $widget['slot'];
+		
+		VirtualPages::dropWidget($widget['rowid']);
+		echo "<banner class=\"success\">Widget Deleted!</banner><br />";
+	} else {
+		echo "<banner class=\"error\">Unknown Error</banner><br />";
+		return;
+	}
+} else {
+	$location = isset($_GET['location']) ? $_GET['location'] : 0;
+	$section = isset($_GET['section']) ? $_GET['section'] : "pages";
+	$parent = isset($_GET['parent']) ? $_GET['parent'] : 0;
+	$slot = isset($_GET['slot']) ? $_GET['slot'] : VirtualPages::PAGEAREA;
+}
 
 if (isset($_GET['swap'])) {
 	$parts = explode("-", $_GET['swap']);
@@ -11,17 +28,24 @@ if (isset($_GET['swap'])) {
 	VirtualPages::getDatabase()->update("widgets", Array("rowid" => $parts[0]), Array("rowid" => $parts[1]));
 	VirtualPages::getDatabase()->update("widgets", Array("rowid" => $parts[1]), Array("rowid" => - 1));
 }
-?>
 
-<h3>Widgets for <?php
-echo $_GET['title'];
-
-if (isset($_GET['subtitle'])) {
-	echo "<br /><span style=\"font-size: small\">";
-	echo $_GET['subtitle'];
-	echo "</span>";
+switch($slot) {
+	case VirtualPages::LEFTCOLUMN:
+		$subtitle = "Left Column";
+		break;
+	
+	case VirtualPages::PAGEAREA:
+		$subtitle = "Page Area";
+		break;
+	
+	case VirtualPages::RIGHTCOLUMN:
+		$subtitle = "Right Column";
+		break;
+	
+	default:
+		$subtitle = "Widgets";
+		break;
 }
-?></h3><?php
 
 $state = "subtitle: ".htmlspecialchars('"'.$_GET['subtitle'].'"')
 	.", title: ".htmlspecialchars('"'.$_GET['title'].'"')
@@ -83,4 +107,15 @@ foreach (VirtualPages::getWidgetTypes($slot) as $type) {
 	echo StringFormat::displayForID($type);
 	echo "</option>";
 }
-?></select>
+?></select><pagebuttons><?php
+
+
+ControlPanel::renderStockButton("discard", "ControlPanel.loadPage('Content', 'Edit', {id: $location})");
+?></pagebuttons><?php
+if($section == "pages") {
+	$page = Array("title" => "Edit Page", "action" => "ControlPanel.loadPage('Content', 'Edit', {id: $location});");
+} else
+	$page = "Unknown Container";
+
+return array(false, $page, array("title" => $subtitle));
+?>
