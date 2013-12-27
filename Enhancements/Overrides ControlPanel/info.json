@@ -1,0 +1,6 @@
+{
+	"name": "Overrides ControlPanel",
+	"description": "Provides a Overrides ControlPanel",
+	"dependancies": ["controlpanel", "overrides"],
+	"provides": "overrides-control"
+}

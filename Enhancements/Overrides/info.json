@@ -1,0 +1,5 @@
+{
+	"name": "Overrides",
+	"provides": "overrides",
+	"description": "Provides a easy way to override site-wide styles and scripts"
+}
