@@ -10,7 +10,7 @@ class ExtensionDatabase extends BasicEmuDatabase {
 	private function __construct() {
 	}
 
-	private function readExtensions($dirName, &$extensions) {
+	private function readExtensions($dirName, &$extensions, $section ="Not Set") {
 
 		$dir = opendir($dirName);
 		while (($ex = readdir($dir)) !== false) {
@@ -38,18 +38,19 @@ class ExtensionDatabase extends BasicEmuDatabase {
 				if (isset($infoData['author']))
 					$extInfo['author'] = $infoData['author'];
 				else
-					$extInfo['author'] = "Unknown";
+					$extInfo['author'] = "Not Set";
 
 				if (isset($infoData['version']))
 					$extInfo['version'] = $infoData['version'];
 				else
-					$extInfo['version'] = "Unknown";
+					$extInfo['version'] = "Not Set";
 
 				if (isset($infoData['description']))
 					$extInfo['description'] = $infoData['description'];
 				else
 					$extInfo['description'] = "Missing Description.";
 				$extInfo['rowid'] = crc32($infoData['name']);
+				$extInfo['section'] = $section;
 
 				$extensions[$infoData['name']] = $extInfo;
 			}
@@ -60,8 +61,19 @@ class ExtensionDatabase extends BasicEmuDatabase {
 	protected function getEntries() {
 		$extensions = Array();
 
-		$this->readExtensions(EXT_PATH, $extensions);
-		$this->readExtensions(FRAMEWORK_EXT_PATH, $extensions);
+		$this->readExtensions(EXT_PATH, $extensions, "User");
+		
+		if ($handle = opendir(FRAMEWORK_EXT_PATH)) {
+			while (false !== ($entry = readdir($handle))) {
+				$path = FRAMEWORK_EXT_PATH . $entry . DIRSEP;
+				if(!is_dir($path) || $entry == "." || $entry == "..")
+					continue;
+				
+				$this->readExtensions($path, $extensions, $entry);
+			}
+
+			closedir($handle);
+		}
 
 		return $extensions;
 	}
