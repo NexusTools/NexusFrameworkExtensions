@@ -14,8 +14,8 @@
 		"email": {}
 	},
 	"actions": {
-		"Edit": "Users/Edit User?id={{rowid}}&popup=true",
-		"Change Password": "Users/Set User Password?id={{rowid}}&popup=true"
+		"Edit": "Accounts/Edit User?id={{rowid}}&popup=true",
+		"Change Password": "Accounts/Set User Password?id={{rowid}}&popup=true"
 	},
 	"buttons": {
 		"new": {
