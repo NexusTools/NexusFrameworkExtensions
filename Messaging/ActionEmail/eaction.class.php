@@ -62,7 +62,7 @@ class ActionEmail {
 			throw new Exception("Unknown token id");
 		$_SESSION['actionemail-activeid'] = $_GET['id'];
 		$expires = Database::timestampToTime($data['expires']);
-		if ($expires > time()) {
+		if (time() > $expires) {
 			self::disableActive();
 			throw new Exception("Token expired");
 		}
