@@ -45,9 +45,9 @@ $extraFields = Triggers::broadcast("ControlPanel", "Manage Table Fields",
 $fields = array_merge($fields, $extraFields);
 
 if ($database instanceof Database && !array_key_exists("created", $fields) && !array_key_exists("created-by", $fields) && !array_key_exists("modified", $fields) && !array_key_exists("modified-by", $fields)) {
-	$fields["created"] = Array("render" => "StringFormat::formatDate");
+	$fields["created"] = Array("render" => "Database::formatTimestamp");
 	$fields["created-by"] = Array("render" => "User::getFullNameByID");
-	$fields["modified"] = Array("render" => "StringFormat::formatDate");
+	$fields["modified"] = Array("render" => "Database::formatTimestamp");
 	$fields["modified-by"] = Array("render" => "User::getFullNameByID");
 }
 

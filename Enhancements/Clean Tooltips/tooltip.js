@@ -4,9 +4,11 @@ var Tooltip = Class.create({
 		this.element = document.createElement("tooltip");
 		if(interactive)
 			this.element.addClassName("interactive");
-		if(Object.isElement(content))
+		if(Object.isElement(content)) {
 			this.content = content;
-		else {
+			if("containerClass" in this.content)
+				this.element.addClassName(this.content.containerClass);
+		} else {
 			this.content = document.createElement("content");
 			this.content.innerHTML = content;
 		}
@@ -70,11 +72,11 @@ var Tooltip = Class.create({
 
 			var arrow;
 			if(pos[1] < 5) {
-				arrow = this.arrowTop;
+				arrow = this.arrowBottom;
 				this.element.addClassName("flipped");
 				pos[1] = elPos.top + elDim.get("padding-box-height") - 5 - this.overlap;
 			} else {
-				arrow = this.arrowBottom;
+				arrow = this.arrowTop;
 				this.element.removeClassName("flipped");
 			}
 
@@ -208,8 +210,8 @@ Framework.Components.registerComponent("*[title], *[title-html], *[menu-tooltip]
 					this.tooltipContent.setContent(element.readAttribute(attr));
 				
 				if(element.hasAttribute(attr + "-class")) {
-					this.tooltipContent.addClassName(element.readAttribute(attr + "-class"));
-					element.writeAttribute(attr + "-class");
+					this.tooltipContent.containerClass = element.readAttribute(attr + "-class");
+					element.writeAttribute(attr + "-class", false);
 				}
 				if(element.hasAttribute(attr + "-callback")) {
 					var initFunc = element.readAttribute(attr + "-callback");
@@ -227,31 +229,80 @@ Framework.Components.registerComponent("*[title], *[title-html], *[menu-tooltip]
 		if(this.interactive === null)
 			throw "No valid arguments found";
 			
-		this.showEvent = (function tooltipShowEvent(e) {
-			try{clearTimeout(this.showHideTimer);}catch(e){}
-			this.showHideTimer = setTimeout(this.show.bind(this), 400);
-		}).bind(this);
-		this.hideEvent = (function tooltipHideEvent(e) {
-			try{clearTimeout(this.showHideTimer);}catch(e){}
-			this.showHideTimer = setTimeout(this.hide.bind(this), 400);
-		}).bind(this);
+		/*if(this.interactive) {
+			this.mouseOver = false;
+			this.hasInputFocus = false;
+			this.showEvent = (function tooltipInteractiveShowEvent(e) {
+				try{clearTimeout(this.showHideTimer);}catch(e){}
+				this.showHideTimer = setTimeout((function() {
+					this.mouseOver = true;
+					this.show.bind(this);
+				}).bind(this), 400);
+			}).bind(this);
+			this.hideEvent = (function tooltipInteractiveHideEvent(e) {
+				try{clearTimeout(this.showHideTimer);}catch(e){}
+				this.showHideTimer = setTimeout((function() {
+					this.mouseOver = false;
+					if(!this.hasInputFocus)
+						this.hide.bind(this);
+				}).bind(this), 400);
+			}).bind(this);
+			
+			this.inputFocusEvent = (function tooltipInputFocusEvent(e) {
+				this.hasInputFocus = true;
+				try{clearTimeout(this.showHideTimer);}catch(e){}
+				this.show.bind(this);
+			}).bind(this);
+			this.inputBlurEvent = (function tooltipInputBlurEvent(e) {
+				this.hasInputFocus = false;
+				if(!this.mouseOver) {
+					try{clearTimeout(this.showHideTimer);}catch(e){}
+					this.showHideTimer = setTimeout(this.hide.bind(this), 400);
+				}
+			}).bind(this);
+			this.inputCheckElements = Element.select(this.tooltipContent, "input, select");
+			this.inputCheckElements.each((function(element) {
+				Event.observe(element, "focus", this.inputFocusEvent);
+				Event.observe(element, "blur", this.inputBlurEvent);
+			}).bind(this));
+			Event.observe(window, "blur", this.inputBlurEvent);
+		} else {*/
+			this.showEvent = (function tooltipShowEvent(e) {
+				try{clearTimeout(this.showHideTimer);}catch(e){}
+				this.showHideTimer = setTimeout(this.show.bind(this), 400);
+			}).bind(this);
+			this.hideEvent = (function tooltipHideEvent(e) {
+				try{clearTimeout(this.showHideTimer);}catch(e){}
+				this.showHideTimer = setTimeout(this.hide.bind(this), 400);
+			}).bind(this);
+		//}
 		
 		element.observe("mouseenter", this.showEvent);
 		element.observe("mousemove", this.showEvent);
 		element.observe("mouseleave", this.hideEvent);
+		Event.observe(window, "blur", this.hideEvent);
 	},
 	
 	"destroy": function(element) {
 		element.stopObserving("mouseenter", this.showEvent);
 		element.stopObserving("mousemove", this.showEvent);
 		element.stopObserving("mouseleave", this.hideEvent);
+		Event.stopObserving(window, "blur", this.hideEvent);
+		
+		/*if(this.interactive) {
+			Event.stopObserving(window, "blur", this.inputBlurEvent);
+			inputCheckElements.each((function(element) {
+				Event.stopObserving(element, "focus", this.inputFocusEvent);
+				Event.stopObserving(element, "blur", this.inputBlurEvent);
+			}).bind(this));
+		}*/
 		
 		this.hide();
 	}
 });
 
 function scrollFixEvent(e) {
-	var tooltip = e.findElement("div.tooltip");
+	var tooltip = e.findElement("tooltip");
 	if(tooltip) {
 		var top = e.element();
 		var delta = e.wheelDelta || -e.detail;
