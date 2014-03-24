@@ -1,0 +1,174 @@
+tooltip {
+	z-index: 700;
+	position: absolute;
+	text-align: center;
+	pointer-events: none;
+	display: block;
+}
+
+tooltip > content {
+	display: block;
+	background-color: white;
+	-webkit-box-shadow: 0 0 4px 0 rgba(0,0,0,0.4);
+	box-shadow: 0 0 4px 0 rgba(0,0,0,0.4);
+	border-radius: 4px;
+	text-align: center;
+	overflow: hidden;
+	max-width: 300px;
+	font-size: 14px;
+	padding: 12px;
+	color: #444;
+}
+
+tooltip > content h1 {
+	margin: 0px;
+	font-size: 120%;
+	text-align: center;
+	padding-bottom: 2px;
+	border-bottom: solid 1pt #eaeaea;
+	margin-bottom: 2px;
+}
+
+tooltip > content h2 {
+	margin: 0px;
+	font-size: 12px;
+	text-transform: uppercase;
+	text-decoration: none;
+	margin-bottom: 15px;
+	color: #adadad;
+}
+
+tooltip.interactive {
+	pointer-events: auto;
+}
+
+tooltip.interactive > content {
+	text-align: left;
+	padding: 22px;
+}
+
+tooltip.interactive > content a {
+	display: block;
+	cursor: pointer;
+	font-size: 14px;
+	text-decoration: none;
+	margin: 10px 0px;
+	color: #45494a;
+}
+
+tooltip.interactive > content a:last-child {
+	margin-bottom: 0px;
+}
+
+tooltip.interactive > hr {
+	height: 0px;
+	border: none;
+	border-bottom: solid 1pt #e8e8e8;
+	border-top: solid 1pt #f1f1f1;
+}
+
+tooltip > arrow {
+	width: 34px;
+	height: 20px;
+	z-index: 500;
+	position: relative;
+	background: url({{/arrow-down.png}}) no-repeat;
+	display: inline-block;
+	top: -2px;
+}
+
+tooltip > arrow.flip {
+	display: none;
+	top: 3px;
+}
+
+tooltip.flipped > arrow {
+	display: none;
+}
+
+tooltip.flipped > arrow.flip {
+	display: inline-block;
+	background: url({{/arrow-up.png}}) no-repeat;
+	top: 3px;
+}
+
+tooltip label {
+	display: block;
+	font-size: 80%;
+	margin-top: 8px;
+}
+
+tooltip working,
+tooltip writing,
+tooltip waiting,
+tooltip information,
+tooltip warning,
+tooltip error {
+	display: block;
+	font-size: 90%;
+	color: #777;
+}
+
+tooltip working::before,
+tooltip writing::before,
+tooltip waiting::before,
+tooltip information::before,
+tooltip warning::before,
+tooltip error::before {
+	margin-right: 6px;
+	font-family: "FontAwesome";
+	display: inline-block;
+}
+
+tooltip working::before {
+	animation: spin 4s infinite linear;
+	-moz-animation: spin 4s infinite linear;
+	-webkit-animation: spin 4s infinite linear;
+	content: "\f013";
+}
+
+tooltip information::before {
+	content: "\f129";
+}
+
+tooltip waiting {
+	opacity: 0.4;
+}
+
+tooltip waiting::before {
+	content: "\f04c";
+}
+
+tooltip writing::before {
+	content: "\f040";
+}
+
+tooltip warning {
+	color: #bca21e;
+}
+
+tooltip warning::before {
+	content: "\f071";
+}
+
+tooltip error {
+	color: #c92222;
+}
+
+tooltip error::before {
+	content: "\f056";
+}
+
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
