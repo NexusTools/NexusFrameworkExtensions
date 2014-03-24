@@ -75,7 +75,7 @@ function createPopup(html, allowClose){
     }
     
     var content = $(document.createElement("contents"));
-    content.innerHTML = html;
+    content.setContent(html);
     
     popup.appendChild(content);
     

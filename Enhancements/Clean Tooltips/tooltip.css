@@ -1,5 +1,5 @@
 tooltip {
-	z-index: 700;
+	z-index: 50000;
 	position: absolute;
 	text-align: center;
 	pointer-events: none;
