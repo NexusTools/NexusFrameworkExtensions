@@ -155,7 +155,7 @@ Framework.Components.registerComponent("*[title], *[title-html], *[menu-tooltip]
 		}
 		if(this.parentTooltip)
 			this.parentTooltip.show();
-		this.tooltip.attachTo(this.getElement());
+		this.tooltip.attachTo(this.getElement(), this.overlap);
 		this.tooltip.show();
 	},
 	
@@ -167,10 +167,14 @@ Framework.Components.registerComponent("*[title], *[title-html], *[menu-tooltip]
 	},
 
 	"setup": function(element) {
+		var overlap = 0;
 		this.interactive = null;
 		this.parentTooltip = element.up("tooltip");
 		this.tooltipContent = document.createElement("content");
 		["title", "tooltip"].each((function(attr) {
+			var overlapAttr = attr + "-overlap";
+			if(element.hasAttribute(overlapAttr))
+				overlap = element.readAttribute(overlapAttr)*1;
 			if(!element.hasAttribute(attr)) {
 				attr += "-html";
 				if(!element.hasAttribute(attr))
@@ -189,6 +193,9 @@ Framework.Components.registerComponent("*[title], *[title-html], *[menu-tooltip]
 		}).bind(this));
 		if(this.interactive === null)
 			["menu-html", "tooltip-menu", "menu-tooltip"].each((function(attr) {
+				var overlapAttr = attr + "-overlap";
+				if(element.hasAttribute(overlapAttr))
+					overlap = element.readAttribute(overlapAttr)*1;
 				if(!element.hasAttribute(attr)) {
 					var idAttr = attr + "-name";
 					if(!element.hasAttribute(idAttr))
@@ -228,6 +235,7 @@ Framework.Components.registerComponent("*[title], *[title-html], *[menu-tooltip]
 			}).bind(this));
 		if(this.interactive === null)
 			throw "No valid arguments found";
+		this.overlap = overlap;
 			
 		/*if(this.interactive) {
 			this.mouseOver = false;
