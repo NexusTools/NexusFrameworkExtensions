@@ -6,6 +6,9 @@ tooltip {
 	position: absolute;
 	position: fixed;
 	display: block;
+	
+	-webkit-transition: all .1s; /* For Safari 3.1 to 6.0 */
+	transition: all .1s;
 }
 
 tooltip > padding {
@@ -87,53 +90,59 @@ tooltip > arrow {
 	height: 20px;
 	z-index: 500;
 	position: relative;
+	transition: all .1s;
+	-webkit-transition: all .1s; /* For Safari 3.1 to 6.0 */
 	background: url({{/arrow-down.png}}) no-repeat;
 	display: block;
-	top: -2px;
+	top: -4px;
 }
 
 tooltip > arrow.vflip {
-	display: none;
+	height: 0px;
 	top: 3px;
 }
 
 tooltip.flipped > arrow {
-	display: none;
+	height: 0px;
 }
 
-tooltip.flipped > arrow.vflip {
-	display: block;
+tooltip > arrow.vflip {
 	background: url({{/arrow-up.png}}) no-repeat;
 	top: 3px;
 }
 
+tooltip.flipped > arrow.vflip {
+	height: 20px;
+}
+
 tooltip.xlock > arrow,
 tooltip.xlock > arrow.vflip {
-	display: none;
+	height: 0px;
 }
 
 tooltip > arrow.xflip {
-	display: none;
-}
-
-tooltip.xlock > arrow.xflip {
-	left: 24px;
-	width: 20px;
+	width: 0px;
 	height: 34px;
 	background: url({{/arrow-right.png}}) no-repeat;
 	display: inline-block;
 	float: right;
 }
 
+tooltip.xlock > arrow.xflip {
+	width: 20px;
+}
+
 tooltip.xlock.flipped > arrow.xflip {
-	display: none;
+	width: 0px;
+}
+
+tooltip > arrow.xflip.hflip {
+	background: url({{/arrow-left.png}}) no-repeat;
+	float: left;
 }
 
 tooltip.xlock.flipped > arrow.xflip.hflip {
-	background: url({{/arrow-left.png}}) no-repeat;
-	display: inline-block;
-	float: left;
-	left: 0px;
+	width: 20px;
 }
 
 tooltip.xlock > content {
@@ -141,7 +150,7 @@ tooltip.xlock > content {
 }
 
 tooltip.xlock > arrow.xflip.hflip {
-	display: none;
+	width: 0px;
 }
 
 tooltip label {

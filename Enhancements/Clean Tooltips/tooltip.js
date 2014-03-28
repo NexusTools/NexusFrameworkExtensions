@@ -26,7 +26,7 @@ var Tooltip = Class.create({
 		this.arrowRight = document.createElement("arrow");
 		Element.addClassName(this.arrowRight, "xflip");
 		Element.addClassName(this.arrowRight, "hflip");
-		this.overlap = 14;
+		this.overlap = 0;
 		
 		this.imagesHooked = [];
 		this.imageLoadedUpdate = (function(e) {
@@ -67,7 +67,7 @@ var Tooltip = Class.create({
 	
 	// Moves this tooltip to point to the element specified
 	"attachTo": function(element, overlap) {
-		this.overlap = overlap || 14;
+		this.overlap = overlap || 0;
 		
 		if(!this.attachedElement && this.updateTimer) {
 			clearTimeout(this.updateTimer);
@@ -159,7 +159,7 @@ var Tooltip = Class.create({
 					if(xTarget > viewportSize.width/2) {
 						targetStyle = {
 							"left": null,
-							"right": Math.max(5, viewportSize.width-(position[0]-14))
+							"right": Math.max(5, viewportSize.width-(position[0]+10))
 						};
 						arrow = this.arrowLeft;
 						if(this.element.hasClassName("flipped")) {
@@ -172,7 +172,7 @@ var Tooltip = Class.create({
 					} else {
 						targetStyle = {
 							"right": null,
-							"left": Math.max(5, position[0]+size[0]-14)
+							"left": Math.max(5, position[0]+size[0]-10)
 						};
 						arrow = this.arrowRight;
 						if(!this.element.hasClassName("flipped")) {
@@ -250,7 +250,8 @@ var Tooltip = Class.create({
 					}
 					var rTarget;
 					var xTarget = position[0]+size[0]/2;
-					if(xTarget > viewportSize.width / 2) {
+					var xFlip = xTarget > viewportSize.width / 2;
+					if(xFlip) {
 						targetStyle["left"] = null;
 						xTarget = viewportSize.width-xTarget-mySize[0]/2;
 						targetStyle["right"] = rTarget = Math.max(5, xTarget);
@@ -260,6 +261,11 @@ var Tooltip = Class.create({
 						targetStyle["left"] = rTarget = Math.max(5, xTarget);
 					}
 					var arrowOffset = mySize[0]/2-17;
+					if(xFlip)
+						arrowOffset = Math.min(mySize[0]-40, arrowOffset - (xTarget - rTarget));
+					else
+						arrowOffset = Math.max(6, arrowOffset + (xTarget - rTarget));
+					
 					if(arrow.offset != arrowOffset) {
 						arrow.offset = arrowOffset;
 						Element.setStyle(arrow, {
