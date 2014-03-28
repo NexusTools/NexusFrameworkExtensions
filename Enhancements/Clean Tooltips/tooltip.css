@@ -1,26 +1,41 @@
 tooltip {
 	z-index: 50000;
-	position: absolute;
 	text-align: center;
 	pointer-events: none;
+	white-space: nowrap;
+	position: absolute;
+	position: fixed;
 	display: block;
 }
 
-tooltip > content {
-	display: block;
+tooltip > padding {
 	background-color: white;
 	-webkit-box-shadow: 0 0 4px 0 rgba(0,0,0,0.4);
 	box-shadow: 0 0 4px 0 rgba(0,0,0,0.4);
+	display: inline-block;
 	border-radius: 4px;
-	text-align: center;
 	overflow: hidden;
+	padding: 6px;
+}
+
+tooltip > padding > viewport {
 	max-width: 300px;
+	display: block;
+	overflow: auto;
+	padding: 0px;
+}
+
+tooltip > padding > viewport > content {
+	display: block;
+	white-space: normal;
+	text-align: left;
 	font-size: 14px;
-	padding: 12px;
+	padding: 6px;
+	width: auto;
 	color: #444;
 }
 
-tooltip > content h1 {
+tooltip > padding > viewport > content h1 {
 	margin: 0px;
 	font-size: 120%;
 	text-align: center;
@@ -29,7 +44,7 @@ tooltip > content h1 {
 	margin-bottom: 2px;
 }
 
-tooltip > content h2 {
+tooltip > padding > viewport > content h2 {
 	margin: 0px;
 	font-size: 12px;
 	text-transform: uppercase;
@@ -73,11 +88,11 @@ tooltip > arrow {
 	z-index: 500;
 	position: relative;
 	background: url({{/arrow-down.png}}) no-repeat;
-	display: inline-block;
+	display: block;
 	top: -2px;
 }
 
-tooltip > arrow.flip {
+tooltip > arrow.vflip {
 	display: none;
 	top: 3px;
 }
@@ -86,10 +101,47 @@ tooltip.flipped > arrow {
 	display: none;
 }
 
-tooltip.flipped > arrow.flip {
-	display: inline-block;
+tooltip.flipped > arrow.vflip {
+	display: block;
 	background: url({{/arrow-up.png}}) no-repeat;
 	top: 3px;
+}
+
+tooltip.xlock > arrow,
+tooltip.xlock > arrow.vflip {
+	display: none;
+}
+
+tooltip > arrow.xflip {
+	display: none;
+}
+
+tooltip.xlock > arrow.xflip {
+	left: 24px;
+	width: 20px;
+	height: 34px;
+	background: url({{/arrow-right.png}}) no-repeat;
+	display: inline-block;
+	float: right;
+}
+
+tooltip.xlock.flipped > arrow.xflip {
+	display: none;
+}
+
+tooltip.xlock.flipped > arrow.xflip.hflip {
+	background: url({{/arrow-left.png}}) no-repeat;
+	display: inline-block;
+	float: left;
+	left: 0px;
+}
+
+tooltip.xlock > content {
+	margin-right: -24px;
+}
+
+tooltip.xlock > arrow.xflip.hflip {
+	display: none;
 }
 
 tooltip label {

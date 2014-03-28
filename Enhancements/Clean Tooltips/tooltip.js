@@ -1,4 +1,8 @@
 var Tooltip = Class.create({
+
+	getElement: function() {
+		return this.element;
+	},
 	
 	initialize: function(content, interactive) {
 		this.element = document.createElement("tooltip");
@@ -13,9 +17,16 @@ var Tooltip = Class.create({
 			this.content.innerHTML = content;
 		}
 		
+		this.boundUpdate = this.update.bind(this);
 		this.arrowTop = document.createElement("arrow");
 		this.arrowBottom = document.createElement("arrow");
-		Element.addClassName(this.arrowBottom, "flip");
+		Element.addClassName(this.arrowBottom, "vflip");
+		this.arrowLeft = document.createElement("arrow");
+		Element.addClassName(this.arrowLeft, "xflip");
+		this.arrowRight = document.createElement("arrow");
+		Element.addClassName(this.arrowRight, "xflip");
+		Element.addClassName(this.arrowRight, "hflip");
+		this.overlap = 14;
 		
 		this.imagesHooked = [];
 		this.imageLoadedUpdate = (function(e) {
@@ -33,8 +44,14 @@ var Tooltip = Class.create({
 			this.imagesHooked.push(img);
 		}).bind(this));
 		Element.setStyle(this.element, {"opacity": 0});
+		this.viewport = document.createElement("viewport");
+		this.viewport.appendChild(this.content);
+		this.padding = document.createElement("padding");
+		this.padding.appendChild(this.viewport);
 		this.element.appendChild(this.arrowBottom);
-		this.element.appendChild(this.content);
+		this.element.appendChild(this.arrowRight);
+		this.element.appendChild(this.padding);
+		this.element.appendChild(this.arrowLeft);
 		this.element.appendChild(this.arrowTop);
 		document.body.appendChild(this.element);
 	},
@@ -45,82 +62,263 @@ var Tooltip = Class.create({
 	
 	"show": function() {
 		this.element.fadeIn();
+		this.update();
 	},
 	
 	// Moves this tooltip to point to the element specified
 	"attachTo": function(element, overlap) {
-		this.overlap = overlap || 0;
+		this.overlap = overlap || 14;
 		
+		if(!this.attachedElement && this.updateTimer) {
+			clearTimeout(this.updateTimer);
+			this.updateTimer = false;
+		}
 		this.attachedElement = element;
 		this.updateTimeout = 10;
 		this.update();
 	},
 	
-	"update": function() {
-		try{clearTimeout(this.updateTimer);}catch(e){}
-
-		if(!this.attachedElement.parentNode)
+	"update": function(secondRun) {
+		if(this.updateTimer)
+			clearTimeout(this.updateTimer);
+		
+		if(!this.attachedElement || !Element.visible(this.attachedElement))
 			this.hide();
 		else {
-			var elDim = this.attachedElement.getLayout();
-			var elPos = this.attachedElement.cumulativeOffset();
-			var elScr = this.attachedElement.cumulativeScrollOffset();
-			var tlDim = this.element.getLayout();
-			var pos = [elPos.left + elDim.get("padding-box-width")/2
-								- tlDim.get("padding-box-width")/2 - elScr.left,
-						elPos.top - tlDim.get("padding-box-height") + 5 + this.overlap];
-
-			var arrow;
-			if(pos[1] < 5) {
-				arrow = this.arrowBottom;
-				this.element.addClassName("flipped");
-				pos[1] = elPos.top + elDim.get("padding-box-height") - 5 - this.overlap;
-			} else {
-				arrow = this.arrowTop;
-				this.element.removeClassName("flipped");
+			if(!this.updateTimer) {
+				Event.observe(window, "resize", this.boundUpdate);
+				Event.observe(window, "scroll", this.boundUpdate);
+				Event.observe(window, "mousewheel", this.boundUpdate);
+				Event.observe(window, "DOMMouseScroll", this.boundUpdate);
+				
+				this.lastChanges = {bottom: false, top: false, left: false, right: false};
 			}
-
-			if(pos[0] < 5) {
-				arrow.setStyle({
-						"left": pos[0] + "px"
-					});
-				pos[0] = 5;
-			} else {
-				var width = document.body.getWidth()-5;
-				var right = pos[0] + tlDim.get("padding-box-width");
-				if(right > width) {
-					arrow.setStyle({
-							"left": (right - width) + "px"
-						});
-					pos[0] = width - tlDim.get("padding-box-width");
-				} else
-					arrow.setStyle({
-						"left": "0px"
-					});
-			}
-
-			if(this.lastX != pos[0] || this.lastY != pos[1]) {
-				this.element.setStyle({
-						"left": pos[0] + "px",
-						"top": pos[1] + "px"
-					});
-				this.lastX = pos[0];
-				this.lastY = pos[1];
+		
+			try {
+				var attachmentLayout;
+				var viewportSize = document.viewport.getDimensions();
+				if(!secondRun) {
+					var maxHeight = viewportSize.height - 30;
+					if(this.lastMaxHeight != maxHeight) {
+						this.viewport.setStyle({"max-height": maxHeight + "px", "width": null});
+						
+						this.lastMaxHeight = maxHeight;
+						//try{clearTimeout(this.timer);}catch(e){}
+						//this.timer = setTimeout((function() {
+							Element.setStyle(this.viewport, {"width": false});
+							if(this.viewport.scrollHeight >= this.lastMaxHeight-12) {
+								var contentLayout = Element.getLayout(this.content);
+								var width = contentLayout.get("border-box-width")+24;
+								Element.setStyle(this.viewport, {"width":
+											Math.min(300, width) + "px"});
+							}
+						//}).bind(this), 5000);
+						
+						this.update(true);
+						return;
+					}
+				}
+				attachmentLayout = Element.getLayout(this.attachedElement);
+				var size = [attachmentLayout.get("border-box-width"),
+							attachmentLayout.get("border-box-height")];
+			
+				if(size[0] < 5 || size[1] < 5)
+					return; // Skip
+					
+				var positionOffset = Element.cumulativeOffset(this.attachedElement);
+				var scrollOffset = Element.cumulativeScrollOffset(this.attachedElement);
+				var position = [positionOffset.left-scrollOffset.left,
+								positionOffset.top-scrollOffset.top];
+				
+				var myLayout = Element.getLayout(this.element);
+				var mySize = [myLayout.get("border-box-width"),
+								myLayout.get("border-box-height")];
+				
+				var changes = 0;
+				var targetStyle;
+				//console.log(viewportSize);
+				
+				var overflow;
+				var yTarget = position[1]+size[1]/2;
+				
+				if(yTarget > viewportSize.height/2)
+					overflow = position[1] - mySize[1] < 40;
+				else
+					overflow = position[1] + size[1] + mySize[1] > viewportSize.height-40;
+				// size[1] + mySize[1] > viewportSize.height-10
+				
+				if(overflow) {
+					if(!this.element.hasClassName("xlock")) {
+						this.element.addClassName("xlock");
+						this.update(true);
+						return;
+					}
+					
+					var arrow;
+					var xTarget = position[0]+size[0]/2;
+					if(xTarget > viewportSize.width/2) {
+						targetStyle = {
+							"left": null,
+							"right": Math.max(5, viewportSize.width-(position[0]-14))
+						};
+						arrow = this.arrowLeft;
+						if(this.element.hasClassName("flipped")) {
+							this.element.removeClassName("flipped");
+							if(!secondRun) {
+								this.update(true);
+								return;
+							}
+						}
+					} else {
+						targetStyle = {
+							"right": null,
+							"left": Math.max(5, position[0]+size[0]-14)
+						};
+						arrow = this.arrowRight;
+						if(!this.element.hasClassName("flipped")) {
+							this.element.addClassName("flipped");
+							if(!secondRun) {
+								this.update(true);
+								return;
+							}
+						}
+					}
+					var rTarget;
+					var yFlip = yTarget > viewportSize.height / 2;
+					yTarget = position[1]+size[1]/2;
+					if(yFlip) {
+						targetStyle["top"] = null;
+						yTarget = viewportSize.height-yTarget-mySize[1]/2;
+						targetStyle["bottom"] = rTarget = Math.max(5, yTarget);
+					} else {
+						targetStyle["bottom"] = null;
+						yTarget = yTarget-mySize[1]/2;
+						targetStyle["top"] = rTarget = Math.max(5, yTarget);
+					}
+					var arrowOffset = mySize[1]/2-17;
+					if(yFlip)
+						arrowOffset = Math.min(Math.min(mySize[1]-40, 
+							this.lastMaxHeight-6), arrowOffset - (yTarget - rTarget));
+					else
+						arrowOffset = Math.max(6, arrowOffset + (yTarget - rTarget));
+					
+					if(arrow.offset != arrowOffset) {
+						arrow.offset = arrowOffset;
+						Element.setStyle(arrow, {
+							"top": arrowOffset + "px"
+								});
+						changes ++;
+					}
+					
+					//console.log(targetStyle);
+				} else {
+					if(this.element.hasClassName("xlock")) {
+						this.element.removeClassName("xlock");
+						if(!secondRun) {
+							this.update(true);
+							return;
+						}
+					}
+					
+					var arrow;
+					if(yTarget > viewportSize.height/2) {
+						targetStyle = {
+							"top": null,
+							"bottom": Math.max(-8, viewportSize.height-(position[1]+this.overlap))
+						};
+						arrow = this.arrowTop;
+						if(this.element.hasClassName("flipped")) {
+							this.element.removeClassName("flipped");
+							if(!secondRun) {
+								this.update(true);
+								return;
+							}
+						}
+					} else {
+						targetStyle = {
+							"bottom": null,
+							"top": Math.max(-8, position[1]+size[1]-this.overlap)
+						};
+						arrow = this.arrowBottom;
+						if(!this.element.hasClassName("flipped")) {
+							this.element.addClassName("flipped");
+							if(!secondRun) {
+								this.update(true);
+								return;
+							}
+						}
+					}
+					var rTarget;
+					var xTarget = position[0]+size[0]/2;
+					if(xTarget > viewportSize.width / 2) {
+						targetStyle["left"] = null;
+						xTarget = viewportSize.width-xTarget-mySize[0]/2;
+						targetStyle["right"] = rTarget = Math.max(5, xTarget);
+					} else {
+						targetStyle["right"] = null;
+						xTarget = xTarget-mySize[0]/2;
+						targetStyle["left"] = rTarget = Math.max(5, xTarget);
+					}
+					var arrowOffset = mySize[0]/2-17;
+					if(arrow.offset != arrowOffset) {
+						arrow.offset = arrowOffset;
+						Element.setStyle(arrow, {
+							"left": arrowOffset + "px"
+								});
+						changes ++;
+					}
+				}
+				
+				var changeArray = {};
+				//console.log(targetStyle);
+				$H(targetStyle).each((function(stylePair) {
+					var value = this.lastChanges[stylePair.key];
+					if(value === stylePair.value || value == stylePair.value)
+						return;
+					
+					value = stylePair.value;
+					if(value)
+						value += "px";
+					changeArray[stylePair.key] = value;
+					this.lastChanges[stylePair.key] = stylePair.value;
+					changes++;
+				}).bind(this));
+				//console.log(changeArray);
+				if(!changes)
+					throw "No Changes";
+				
+				//console.log(changeArray);
+				this.element.setStyle(changeArray);
 				if(this.updateTimeout > 10)
 					this.updateTimeout /= 2;
-			} else if(this.updateTimeout < 250)
-				this.updateTimeout *= 1.25;
+			} catch(e) {
+				/*if("" + e != "No Changes") {
+					console.log("" + e);
+					console.log(e.stack);
+				}*/
+			
+				if(this.updateTimeout < 600)
+					this.updateTimeout *= 1.25;
+			}
 
 			this.updateTimer = setTimeout(this.update.bind(this), this.updateTimeout);
 		}
 	},
 	
-	"hide": function(callback) {
+	"hide": function() {
+		try{clearTimeout(this.updateTimer);}catch(e){}
+		if(this.attachedElement) {
+			Event.stopObserving(window, "resize", this.boundUpdate);
+			Event.stopObserving(window, "scroll", this.boundUpdate);
+			Event.stopObserving(window, "mousewheel", this.boundUpdate);
+			Event.stopObserving(window, "DOMMouseScroll", this.boundUpdate);
+		}
+		this.updateTimer = false;
+		
 		this.element.fadeOut({
 			"callback": (function() {
 				this.element.remove();
-				if(callback)
-					try{callback();}catch(e){}
+				Event.fire(this.element, "tooltip:destroyed");
 			
 				this.imagesHooked.each((function(img) {
 					img.stopObserving("load", this.imageLoadedUpdate);
@@ -146,6 +344,9 @@ Framework.Components.registerComponent("*[title], *[title-html], *[menu-tooltip]
 	"show": function() {
 		if(!this.tooltip) {
 			this.tooltip = new Tooltip(this.tooltipContent, this.interactive);
+			Event.on(this.tooltip.getElement(),"tooltip:destroyed", (function() {
+				this.tooltip = false;
+			}).bind(this));
 			if(this.interactive) {
 				var element = this.tooltip.getElement();
 				element.observe("mouseenter", this.showEvent);
@@ -161,15 +362,13 @@ Framework.Components.registerComponent("*[title], *[title-html], *[menu-tooltip]
 	
 	"hide": function() {
 		if(this.tooltip)
-			this.tooltip.hide((function() {
-				this.tooltip = false;
-			}).bind(this));
+			this.tooltip.hide();
 	},
 
 	"setup": function(element) {
 		var overlap = 0;
 		this.interactive = null;
-		this.parentTooltip = element.up("tooltip");
+		this.parentTooltip = $(element).up("tooltip");
 		this.tooltipContent = document.createElement("content");
 		["title", "tooltip"].each((function(attr) {
 			var overlapAttr = attr + "-overlap";
