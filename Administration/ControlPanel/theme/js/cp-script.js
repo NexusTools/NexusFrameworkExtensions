@@ -207,6 +207,9 @@ ControlPanel.submitForm = function(button, getVars){
 					postVars[input.getAttribute("name")] = input.checked ? "Yes" : "No";
 					return;
 				} else if(input.type == "file") {
+					alert("Dynamic forms not yet supported.");
+					
+					throw "Death";
 					if(input.files && window.FormData) {
 						if(input.files.length)
 							postVars[input.getAttribute("name")] = input.files[0];
@@ -215,7 +218,9 @@ ControlPanel.submitForm = function(button, getVars){
 						badBrowser = true;
 				}
 			
-			postVars[input.getAttribute("name")] = input.getValue();
+			var val;
+			if(val = Form.Element.Methods.getValue(input))
+				postVars[input.getAttribute("name")] = val;
 		}
 	});
 	if(badBrowser) {
@@ -225,7 +230,7 @@ ControlPanel.submitForm = function(button, getVars){
 	}
 	
 	if(button)
-		postVars['action'] = $(button).getValue();
+		postVars['action'] = Form.Element.Methods.getValue(button);
 	
 	var getData = "";
 	if(getVars != null)

@@ -1,0 +1,5 @@
+{
+	"name": "FontAwesome Charset",
+	"provides": "fontawesome-charset",
+	"dependancies": "fontawesome"
+}
