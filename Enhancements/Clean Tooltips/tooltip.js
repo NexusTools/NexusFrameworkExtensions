@@ -289,20 +289,13 @@ var Tooltip = Class.create({
 					this.lastChanges[stylePair.key] = stylePair.value;
 					changes++;
 				}).bind(this));
-				//console.log(changeArray);
 				if(!changes)
 					throw "No Changes";
 				
-				//console.log(changeArray);
 				this.element.setStyle(changeArray);
 				if(this.updateTimeout > 10)
 					this.updateTimeout /= 2;
 			} catch(e) {
-				/*if("" + e != "No Changes") {
-					console.log("" + e);
-					console.log(e.stack);
-				}*/
-			
 				if(this.updateTimeout < 600)
 					this.updateTimeout *= 1.25;
 			}
@@ -369,6 +362,11 @@ Framework.Components.registerComponent("*[title], *[title-html], *[menu-tooltip]
 	"hide": function() {
 		if(this.tooltip)
 			this.tooltip.hide();
+	},
+	
+	"update": function() {
+		if(this.tooltip)
+			this.tooltip.update();
 	},
 
 	"setup": function(element) {
@@ -441,7 +439,10 @@ Framework.Components.registerComponent("*[title], *[title-html], *[menu-tooltip]
 		if(this.interactive === null)
 			throw "No valid arguments found";
 		this.overlap = overlap;
-			
+		
+		this.showHideTimer = new Framework.Timers.DelayTimer(true);
+		this.showHideTimer.registerAction("show", this.show.bind(this), this.interactive ? 50 : 400);
+		this.showHideTimer.registerAction("hide", this.hide.bind(this), 400);
 		/*if(this.interactive) {
 			this.mouseOver = false;
 			this.hasInputFocus = false;
@@ -482,11 +483,11 @@ Framework.Components.registerComponent("*[title], *[title-html], *[menu-tooltip]
 		} else {*/
 			this.showEvent = (function tooltipShowEvent(e) {
 				try{clearTimeout(this.showHideTimer);}catch(e){}
-				this.showHideTimer = setTimeout(this.show.bind(this), 400);
+				this.showHideTimer.activate("show");
 			}).bind(this);
 			this.hideEvent = (function tooltipHideEvent(e) {
 				try{clearTimeout(this.showHideTimer);}catch(e){}
-				this.showHideTimer = setTimeout(this.hide.bind(this), 400);
+				this.showHideTimer.activate("hide");
 			}).bind(this);
 		//}
 		
@@ -519,12 +520,12 @@ function scrollFixEvent(e) {
 	if(tooltip) {
 		var top = e.element();
 		var delta = e.wheelDelta || -e.detail;
-		console.log(top, tooltip, delta);
+		//console.log(top, tooltip, delta);
 		var stopScroll = false;
 		while(top != tooltip) {
 			var scrollHeight = top.scrollHeight - $(top).getHeight();
 			if(scrollHeight > 5 && top.getStyle("overflow") != "hidden") {
-				console.log(top.scrollTop, $(top).getHeight());
+				//console.log(top.scrollTop, $(top).getHeight());
 				if (delta > 0 && top.scrollTop > 0)
 					return true;
 				if (delta < 0 && top.scrollTop < scrollHeight)
