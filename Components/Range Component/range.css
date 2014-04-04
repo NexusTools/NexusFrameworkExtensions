@@ -1,27 +1,36 @@
 range.setup {
-	height: 15px;
-	min-width: 80px;
+	height: 20px;
+	min-width: 120px;
 	display: inline-block;
 	position: relative;
+}
+range.setup.disabled {
+	cursor: default !important;
 }
 range.setup track {
 	display: block;
 	position: absolute;
-	padding: 0px 8px;
+	padding: 0px 5px;
 	height: 5px;
 	width: 100%;
-	top: 5px;
+	top: 8px;
 }
 range.setup back,
 range.setup bar {
 	height: 5px;
 	display: block;
-	background: #f2f2f2;
+	border-radius: 8px;
+	background: #E1E1E1;
 	width: 100%;
 }
 range.setup bar {
 	position: relative;
-	background: #444;
+	background: #A4A4A4;
+	width: 0px;
+}
+range.setup.disabled back,
+range.setup.disabled bar {
+	opacity: 0.3;
 }
 range.setup knob {
 	cursor: move;
@@ -31,20 +40,19 @@ range.setup knob {
 	
 	display: block;
 	position: absolute;
-	background: ThreeDShadow; /* Old browsers */
-	background: -moz-radial-gradient(center, ellipse cover,  ThreeDShadow 0%, ThreeDFace 100%); /* FF3.6+ */
-	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,ThreeDShadow), color-stop(100%,ThreeDFace)); /* Chrome,Safari4+ */
-	background: -webkit-radial-gradient(center, ellipse cover,  ThreeDShadow 0%,ThreeDFace 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-radial-gradient(center, ellipse cover,  ThreeDShadow 0%,ThreeDFace 100%); /* Opera 12+ */
-	background: -ms-radial-gradient(center, ellipse cover,  ThreeDShadow 0%,ThreeDFace 100%); /* IE10+ */
-	background: radial-gradient(ellipse at center,  ThreeDShadow 0%,ThreeDFace 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='ThreeDShadow', endColorstr='ThreeDFace',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	background: white;
 
+	-webkit-box-shadow: 1px 1px 3px 0 rgba(0,0,0,0.4);
+	box-shadow: 1px 1px 3px 0 rgba(0,0,0,0.4);
 	border-radius: 15px;
-	height: 15px;
-	width: 15px;
+	height: 20px;
+	width: 10px;
 	left: 0px;
 	top: 0px;
+}
+range.setup.disabled knob {
+	-webkit-box-shadow: 0px 0px 1px 0 rgba(0,0,0,0.2);
+	box-shadow: 0px 0px 1px 0 rgba(0,0,0,0.2);
 }
 range.setup knob:hover {
 	background: ButtonHighlight;
