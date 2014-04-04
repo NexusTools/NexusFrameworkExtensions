@@ -4,8 +4,8 @@ range.setup {
 	display: inline-block;
 	position: relative;
 }
-range.setup.disabled {
-	cursor: default !important;
+range.setup.disabled * {
+	cursor: inherit !important;
 }
 range.setup track {
 	display: block;
@@ -62,4 +62,10 @@ range.setup knob:active {
 	cursor: -moz-grabbing;
 	cursor: -webkit-grabbing;
 	cursor: grabbing;
+}
+range.setup.flipped knob {
+	background: ButtonShadow;
+}
+range.setup.flipped knob:active {
+	background: white;
 }
