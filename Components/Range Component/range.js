@@ -38,16 +38,18 @@ Framework.Components.registerComponent("range", {
 		var width = el.measure("width")-(this.knobSize*2);
 		var minPerc = ((this.values[0] - this.min) / this.valMod);
 		var maxPerc = ((this.values[1] - this.min) / this.valMod);
-		this.minKnob.setStyle({
+		this.minKnob.slideTo({
 			"left": (minPerc*width) + "px"
 		});
-		this.maxKnob.setStyle({
+		this.maxKnob.slideTo({
 			"left": (this.knobSize+(maxPerc*width)) + "px"
 		});
 		var left = minPerc*width;
 		var right = (maxPerc*width)+this.knobSize;
-		this.bar.setStyle({
-			"left": left + "px",
+		this.bar.slideTo({
+			"left": left + "px"
+		});
+		this.bar.sizeTo({
 			"width": (right-left) + "px"
 		});
 	},
