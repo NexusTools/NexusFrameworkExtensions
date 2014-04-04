@@ -1,0 +1,57 @@
+range.setup {
+	height: 15px;
+	min-width: 80px;
+	display: inline-block;
+	position: relative;
+}
+range.setup track {
+	display: block;
+	position: absolute;
+	padding: 0px 8px;
+	height: 5px;
+	width: 100%;
+	top: 5px;
+}
+range.setup back,
+range.setup bar {
+	height: 5px;
+	display: block;
+	background: #f2f2f2;
+	width: 100%;
+}
+range.setup bar {
+	position: relative;
+	background: #444;
+}
+range.setup knob {
+	cursor: move;
+	cursor: -moz-grab;
+	cursor: -webkit-grab;
+	cursor: grab;
+	
+	display: block;
+	position: absolute;
+	background: ThreeDShadow; /* Old browsers */
+	background: -moz-radial-gradient(center, ellipse cover,  ThreeDShadow 0%, ThreeDFace 100%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,ThreeDShadow), color-stop(100%,ThreeDFace)); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover,  ThreeDShadow 0%,ThreeDFace 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(center, ellipse cover,  ThreeDShadow 0%,ThreeDFace 100%); /* Opera 12+ */
+	background: -ms-radial-gradient(center, ellipse cover,  ThreeDShadow 0%,ThreeDFace 100%); /* IE10+ */
+	background: radial-gradient(ellipse at center,  ThreeDShadow 0%,ThreeDFace 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='ThreeDShadow', endColorstr='ThreeDFace',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+	border-radius: 15px;
+	height: 15px;
+	width: 15px;
+	left: 0px;
+	top: 0px;
+}
+range.setup knob:hover {
+	background: ButtonHighlight;
+}
+range.setup knob:active {
+	background: ButtonShadow;
+	cursor: -moz-grabbing;
+	cursor: -webkit-grabbing;
+	cursor: grabbing;
+}
