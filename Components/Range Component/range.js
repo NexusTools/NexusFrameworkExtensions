@@ -15,12 +15,14 @@ Framework.Components.registerComponent("range", {
 	setMinimum: function(min) {
 		this.min = min;
 		this.values[0] = Math.min(this.values[0], this.min);
+		this.updateEnabled();
 		this.updateValues();
 	},
 	
 	setMaximum: function(max) {
 		this.max = max;
 		this.values[1] = Math.max(this.values[1], this.max);
+		this.updateEnabled();
 		this.updateValues();
 	},
 	
@@ -80,39 +82,51 @@ Framework.Components.registerComponent("range", {
 	hook: function(el) {
 		el.getValue = this.getValue.bind(this);
 		el.setValue = this.setValue.bind(this);
+		el.disable = this.disable.bind(this);
+		el.enable = this.enable.bind(this);
 	},
 	
-	updateAttributes: function(el) {
-		this.min = parseFloat(el.readAttribute("min")) || 0;
-		this.max = parseFloat(el.readAttribute("max")) || 100;
-		this.tick = parseFloat(el.readAttribute("tick")) || 1;
-		this.valMod = this.max-this.min;
+	updateAttributes: function(el, helper) {
+		var uMin = helper.needsUpdate("min");
+		var uMax = helper.needsUpdate("max");
+		if(uMin || uMax) {
+			if(uMin)
+				this.min = parseFloat(el.readAttribute("min")) || 0;
+			if(uMax)
+				this.max = parseFloat(el.readAttribute("max")) || 100;
+			this.valMod = this.max-this.min;
+		}
+		if(helper.needsUpdate("tick"))
+			this.tick = parseFloat(el.readAttribute("tick")) || 1;
 		
-		this.singleMode = el.hasAttribute("single");
-		if(this.singleMode)
-			this.minKnob.hide();
-		else
-			this.minKnob.show();
+		if(helper.needsUpdate("single")) {
+			this.singleMode = el.hasAttribute("single");
+			if(this.singleMode)
+				this.minKnob.hide();
+			else
+				this.minKnob.show();
+		}
 		
-		this.values = el.readAttribute("value");
-		if(this.values) {
-			this.values = this.values.split(/[,\s]+/);
-			if(!this.values[1]) {
-				this.values[1] = this.values[0];
-				this.values[0] = this.min;
-			}
-			this.values = [parseFloat(this.values[0]),parseFloat(this.values[1])];
-		} else
-			this.values = [this.min,this.max];
-		this.oldValues = this.values.slice(0);
-			
-		this.updateEnabled();
-		this.updateLayout(el);
+		if(helper.needsUpdate("value")) {
+			this.values = el.readAttribute("value");
+			if(this.values) {
+				this.values = this.values.split(/[,\s]+/);
+				if(!this.values[1]) {
+					this.values[1] = this.values[0];
+					this.values[0] = this.min;
+				}
+				this.values = [parseFloat(this.values[0]),parseFloat(this.values[1])];
+			} else
+				this.values = [this.min,this.max];
+			this.oldValues = this.values.slice(0);
+		}
+		
+		if(uMin || uMax || helper.needsUpdate("disabled"))
+			this.updateEnabled();
 	},
 	
 	updateEnabled: function() {
-		if(this.getElement().hasAttribute("disabled") ||
-				this.values[0] == this.values[1])
+		if(this.getElement().hasAttribute("disabled") || this.min == this.max)
 			this.disable();
 		else
 			this.enable();
@@ -136,6 +150,7 @@ Framework.Components.registerComponent("range", {
 			return;
 		
 		this.getElement().removeClassName("disabled");
+		this.disabled = false;
 	},
 	
 	disable: function() {
@@ -143,6 +158,7 @@ Framework.Components.registerComponent("range", {
 			return;
 		
 		this.getElement().addClassName("disabled");
+		this.disabled = true;
 	},
 	
 	setupLayout: function(el) {
@@ -152,6 +168,7 @@ Framework.Components.registerComponent("range", {
 		
 		var knobsFlipped;
 		Event.on(this.minKnob, "drag:start", (function(e) {
+			console.log("drag:start", this.disabled);
 			if(this.disabled)
 				e.stop(); // Prevent event
 			knobsFlipped = false;
@@ -274,7 +291,7 @@ Framework.Components.registerComponent("range", {
 				this.getElement().removeClassName("flipped");
 				val[1] = readValueForMaxKnob();
 			} else
-				val[1] = Math.max(val, this.values[1]);
+				val[1] = this.values[1];
 			val[0] = Math.round(val[0] / this.tick) * this.tick;
 			val[1] = Math.round(val[1] / this.tick) * this.tick;
 			this.getElement().removeClassName("flipped");
@@ -283,13 +300,13 @@ Framework.Components.registerComponent("range", {
 		}).bind(this));
 		Event.on(this.maxKnob, "drag:stop", (function(e) {
 			var val = [];
-		
+			
 			val[1] = readValueForMaxKnob();
 			if(knobsFlipped) {
 				this.getElement().removeClassName("flipped");
 				val[0] = readValueForMinKnob();
 			} else
-				val[0] = Math.min(val, this.values[0]);
+				val[0] = this.values[0];
 			val[0] = Math.round(val[0] / this.tick) * this.tick;
 			val[1] = Math.round(val[1] / this.tick) * this.tick;
 			this.getElement().removeClassName("flipped");
