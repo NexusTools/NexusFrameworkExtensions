@@ -54,6 +54,10 @@ range.setup knob {
 	left: 0px;
 	top: 0px;
 }
+.dragging range.setup knob {
+	-webkit-transition: none;
+	transition: none;
+}
 range.setup.disabled knob {
 	-webkit-box-shadow: 0px 0px 1px 0 rgba(0,0,0,0.2);
 	box-shadow: 0px 0px 1px 0 rgba(0,0,0,0.2);
@@ -61,7 +65,7 @@ range.setup.disabled knob {
 range.setup knob:hover {
 	background: ButtonHighlight;
 }
-range.setup knob:active {
+range.setup knob.grabbed {
 	background: ButtonShadow;
 	cursor: -moz-grabbing;
 	cursor: -webkit-grabbing;
@@ -70,7 +74,7 @@ range.setup knob:active {
 range.setup.flipped knob {
 	background: ButtonShadow;
 }
-range.setup.flipped knob:active {
+range.setup.flipped knob.grabbed {
 	background: white;
 }
 range.setup.disabled knob {
