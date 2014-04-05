@@ -37,7 +37,15 @@ Framework.Components.registerComponent("range", {
 		
 		this.values = val;
 		this.oldValues = val.slice(0);
+		this.repairValues();
 		this.updateValues();
+	},
+	
+	repairValues: function() {
+		this.values[0] = Math.max(this.min, this.values[0]);
+		this.values[1] = Math.min(this.max, this.values[1]);
+		this.values[0] = Math.min(this.values[0], this.values[1]);
+		this.values[1] = Math.max(this.values[0], this.values[1]);
 	},
 	
 	updateLayout: function(el) {
@@ -99,8 +107,11 @@ Framework.Components.registerComponent("range", {
 				this.max = parseFloat(el.readAttribute("max")) || 100;
 			this.valMod = this.max-this.min;
 		}
-		if(helper.needsUpdate("tick"))
-			this.tick = parseFloat(el.readAttribute("tick")) || 1;
+		
+		if(helper.needsUpdate("value")) {
+			this.values = $n(el.readAttribute("value"), [this.min,this.max]);
+			this.oldValues = this.values.slice(0);
+		}
 		
 		if(helper.needsUpdate("single")) {
 			this.singleMode = el.hasAttribute("single");
@@ -110,13 +121,18 @@ Framework.Components.registerComponent("range", {
 				this.minKnob.show();
 		}
 		
-		if(helper.needsUpdate("value")) {
-			this.values = $n(el.readAttribute("value"), [this.min,this.max]);
-			this.oldValues = this.values.slice(0);
+		if(helper.needsUpdate("tick")) {
+			this.tick = parseFloat(el.readAttribute("tick")) || 1;
+			this.values[0] = Math.round(this.values[0] / this.tick) * this.tick;
+			this.values[1] = Math.round(this.values[1] / this.tick) * this.tick;
 		}
 		
 		if(uMin || uMax || helper.needsUpdate("disabled"))
 			this.updateEnabled();
+		
+		// repair the value ranges
+		if(helper.foundMatches())
+			this.repairValues();
 	},
 	
 	updateEnabled: function() {
@@ -231,7 +247,11 @@ Framework.Components.registerComponent("range", {
 			this.maxKnob.setStyle({"left": pos.left + "px"});
 			width -= this.knobSize*2;
 			
-			var left = (((values[0] - this.min) / this.valMod)*width);
+			var left;
+			if(this.singleMode)
+				left = 0;
+			else
+				left = (((values[0] - this.min) / this.valMod)*width);
 			var right = pos.left;
 			if(!this.singleMode && !knobsFlipped && left + this.knobSize/2 > right)
 				return dragMinKnob(realPos, [this.values[1], this.values[0]]);
