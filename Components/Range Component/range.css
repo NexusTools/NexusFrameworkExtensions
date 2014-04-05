@@ -21,6 +21,8 @@ range.setup bar {
 	display: block;
 	border-radius: 8px;
 	background: #E1E1E1;
+	-webkit-transition: opacity .2s;
+	transition: opacity .2s;
 	width: 100%;
 }
 range.setup bar {
@@ -42,6 +44,8 @@ range.setup knob {
 	position: absolute;
 	background: white;
 
+	transition: background .2s;
+	-webkit-transition: background .2s;
 	-webkit-box-shadow: 1px 1px 3px 0 rgba(0,0,0,0.4);
 	box-shadow: 1px 1px 3px 0 rgba(0,0,0,0.4);
 	border-radius: 15px;
@@ -68,4 +72,7 @@ range.setup.flipped knob {
 }
 range.setup.flipped knob:active {
 	background: white;
+}
+range.setup.disabled knob {
+	background: white !important;
 }

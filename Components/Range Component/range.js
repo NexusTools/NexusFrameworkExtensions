@@ -31,7 +31,7 @@ Framework.Components.registerComponent("range", {
 			val = [this.min,val*1];
 	
 		if(this.oldValues[0] == val[0] && this.oldValues[1] == val[1]) {
-			this.updateLayout(this.getElement());
+			this.scheduleLayoutUpdate();
 			return; // No update
 		}
 		
@@ -47,6 +47,7 @@ Framework.Components.registerComponent("range", {
 		} else {
 			width = el.measure("width")-(this.knobSize*2);
 		}
+		
 		var minPerc = ((this.values[0] - this.min) / this.valMod);
 		var maxPerc = ((this.values[1] - this.min) / this.valMod);
 		this.minKnob.slideTo({
@@ -70,11 +71,12 @@ Framework.Components.registerComponent("range", {
 		this.bar.sizeTo({
 			"width": (right-left) + "px"
 		});
+		console.log(width, this.values, this.min, this.max, left, right);
 	},
 	
 	updateValues: function() {
 		var el = this.getElement();
-		this.updateLayout(el);
+		this.scheduleLayoutUpdate();
 		
 		Event.simulate(el, "change");
 	},
@@ -115,7 +117,8 @@ Framework.Components.registerComponent("range", {
 					this.values[1] = this.values[0];
 					this.values[0] = this.min;
 				}
-				this.values = [parseFloat(this.values[0]),parseFloat(this.values[1])];
+				this.values = [parseFloat(this.values[0]),
+								parseFloat(this.values[1])];
 			} else
 				this.values = [this.min,this.max];
 			this.oldValues = this.values.slice(0);
@@ -168,7 +171,6 @@ Framework.Components.registerComponent("range", {
 		
 		var knobsFlipped;
 		Event.on(this.minKnob, "drag:start", (function(e) {
-			console.log("drag:start", this.disabled);
 			if(this.disabled)
 				e.stop(); // Prevent event
 			knobsFlipped = false;
@@ -215,12 +217,14 @@ Framework.Components.registerComponent("range", {
 		}).bind(this);
 		dragMaxKnob = (function(pos, values) {
 			var realPos;
-			if(!!values != knobsFlipped) {
-				knobsFlipped = !!values;
-				if(knobsFlipped)
-					this.getElement().addClassName("flipped");
-				else
-					this.getElement().removeClassName("flipped");
+			if(!this.singleMode){
+				if(!!values != knobsFlipped) {
+					knobsFlipped = !!values;
+					if(knobsFlipped)
+						this.getElement().addClassName("flipped");
+					else
+						this.getElement().removeClassName("flipped");
+				}
 			}
 			if(!values) {
 				values = this.values;
@@ -238,7 +242,7 @@ Framework.Components.registerComponent("range", {
 			
 			var left = (((values[0] - this.min) / this.valMod)*width);
 			var right = pos.left;
-			if(!knobsFlipped && left + this.knobSize/2 > right)
+			if(!this.singleMode && !knobsFlipped && left + this.knobSize/2 > right)
 				return dragMinKnob(realPos, [this.values[1], this.values[0]]);
 			
 			this.bar.setStyle({
@@ -250,15 +254,14 @@ Framework.Components.registerComponent("range", {
 			this.minKnob.setStyle({"left": Math.min(left, pos.left) + "px"});
 		}).bind(this);
 		
-		Event.on(this.minKnob, "drag:move", (function(e) {
+		Event.on(this.minKnob, "drag:move", function(e) {
 			dragMinKnob(e.memo);
-			
 			e.stop();
-		}).bind(this));
-		Event.on(this.maxKnob, "drag:move", (function(e) {
+		});
+		Event.on(this.maxKnob, "drag:move", function(e) {
 			dragMaxKnob(e.memo);
 			e.stop();
-		}).bind(this));
+		});
 		
 		var readValueForMinKnob = (function() {
 			var val = this.minKnob.measure("left");
