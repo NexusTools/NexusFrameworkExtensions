@@ -71,7 +71,8 @@ Framework.Components.registerComponent("range", {
 		this.bar.sizeTo({
 			"width": (right-left) + "px"
 		});
-		console.log(width, this.values, this.min, this.max, left, right);
+		//console.trace();
+		//console.log(width, this.values, this.min, this.max, left, right);
 	},
 	
 	updateValues: function() {
