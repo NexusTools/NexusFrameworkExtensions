@@ -110,17 +110,7 @@ Framework.Components.registerComponent("range", {
 		}
 		
 		if(helper.needsUpdate("value")) {
-			this.values = el.readAttribute("value");
-			if(this.values) {
-				this.values = this.values.split(/[,\s]+/);
-				if(!this.values[1]) {
-					this.values[1] = this.values[0];
-					this.values[0] = this.min;
-				}
-				this.values = [parseFloat(this.values[0]),
-								parseFloat(this.values[1])];
-			} else
-				this.values = [this.min,this.max];
+			this.values = $n(el.readAttribute("value"), [this.min,this.max]);
 			this.oldValues = this.values.slice(0);
 		}
 		
