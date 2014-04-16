@@ -70,20 +70,30 @@ if (!function_exists("fetch_posted_values")) {
 			if (is_numeric($field))
 				$field = $data;
 
-			if (isset($_POST[$field])) {
-				$value = $_POST[$field];
-				if (isset($meta['encode']))
-					$value = call_user_func($meta['encode'], $value);
-				$meta = $fields[$field];
-				if (is_string($msg = EditCore::validate($meta['type'], $field, $value, $meta)))
-					$errors[$field] = $msg;
-				else
+			try {
+				if (isset($_POST[$field])) {
+					$value = $_POST[$field];
+					if($meta['required'] && !$value)
+						throw new Exception("This field is required");
+					
+					if (isset($meta['encode']))
+						$value = call_user_func($meta['encode'], $value);
+					$meta = $fields[$field];
+					if (is_string($msg = EditCore::validate($meta['type'], $field, $value, $meta)))
+						throw new Exception($msg);
+				
 					if ($encode)
 						$values[$field] = EditCore::encode($meta['type'], $value, $meta);
 					else
 						$values[$field] = $value;
-			} else
-				$errors[$field] = "Missing from POST Data";
+				} else {
+					$values[$field] = "";
+					if($meta['required'])
+						throw new Exception("This field is required");
+				}
+			} catch(Exception $e) {
+				$errors[$field] = $e->getMessage();
+			}
 		}
 
 		return $values;
